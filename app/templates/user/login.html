@@ -1,4 +1,5 @@
 <!doctype html>
+<!--suppress ALL -->
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -136,7 +137,8 @@
 						</div>
 
 						<div>
-							<button class="btn-signup">페이스북으로 로그인하기</button>
+							<!-- <button class="btn-signup" onclick="location.href = '{{ url_for('user.facebook_login', _external=True) }}';">페이스북으로 로그인하기</button> -->
+                            <button class="btn-signup" onclick="alert('준비중입니다');">페이스북으로 로그인하기</button>
 						</div>
 						<div>
 							<button class="btn-signup">인스타그램으로 로그인하기</button>
