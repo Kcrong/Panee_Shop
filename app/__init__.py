@@ -21,10 +21,10 @@ login_manager = LoginManager()
 
 
 def setting_app():
-    from main import main_blueprint
-    from user import user_blueprint
-    from shop import shop_blueprint
-    from tag import tag_blueprint
+    from app.main import main_blueprint
+    from app.user import user_blueprint
+    from app.shop import shop_blueprint
+    from app.tag import tag_blueprint
 
     app.register_blueprint(main_blueprint)
     app.register_blueprint(user_blueprint, url_prefix='/user')
@@ -39,8 +39,7 @@ def setting_app():
 app = setting_app()
 db = SQLAlchemy(app)
 
-import models
-from models import *
+from app.models import *
 
 migrate = Migrate(app, db)
 
@@ -114,4 +113,4 @@ def init_db():
 
     db.session.commit()
 
-    print 'DB DUMMY'
+    print('DB DUMMY')

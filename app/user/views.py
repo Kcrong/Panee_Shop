@@ -4,8 +4,8 @@ from flask import jsonify, send_from_directory, request, url_for, render_templat
 from flask.ext.login import login_user, login_required, current_user, logout_user
 from sqlalchemy.exc import IntegrityError
 
-from fb_manager import *
-from naver_manager import *
+from .fb_manager import *
+from .naver_manager import *
 
 from . import user_blueprint
 from ..models import *

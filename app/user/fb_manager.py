@@ -2,7 +2,8 @@
 import json
 import wget
 
-from urllib2 import urlopen
+from urllib.request import urlopen
+
 
 from flask_oauth import OAuth, session
 
@@ -226,7 +227,7 @@ def save_all_fb_article(user):
                 product_name = get_product_name_from_content(pos_data)
                 # article['image']
 
-                print "%s 는 %s 원입니다." % (product_name, price)
+                print("%s 는 %s 원입니다." % (product_name, price))
 
                 if Product.query.filter_by(user=user, name=product_name, price=price).first() is not None:
                     # 기존에 파싱되어 있는 상품이라면 넘긴다
