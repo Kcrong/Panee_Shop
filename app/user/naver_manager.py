@@ -1,9 +1,9 @@
 # -*-coding: utf-8 -*-
 
-from urllib2 import urlopen
+from urllib.request import urlopen
 from xml.etree.ElementTree import fromstring
 
-from BeautifulSoup import BeautifulSoup
+from bs4 import BeautifulSoup
 
 """
 네이버 블로그는 클릭후 내부 ajax 를 통해 게시물 데이터를 불러온다.
@@ -126,7 +126,7 @@ def get_all_naver_article(user, naver_id):
     blog_data = parse_blog_data(xml_raw)
 
     # TODO: 가져온 blog_data 를 DB 에 저장하기.
-    print blog_data
+    print(blog_data)
 
 
 
