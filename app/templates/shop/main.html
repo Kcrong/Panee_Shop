@@ -249,11 +249,13 @@
 
 		
 		<div class="content-list-area">
-			<div class="main-content">
+
+            {% for product in all_products %}
+		        <div class="main-content">
 				<a href = "javascript:void(0)"  onclick = "document.getElementById('light').style.display='block';document.getElementById('fade').style.display='block'">
 					<div class="product-area">
 						<span>
-							<img src="{{ url_for('main.img_static', filename='main-deal/p_0009_pic_ex.png') }}" style="width:100%;height:150px;"/>
+							<img src="{{ url_for('shop.shop_image', filename=product.main_image) }}" style="width:100%;height:150px;"/>
 						</span>
 					</div>
 				</a>
@@ -262,53 +264,13 @@
 					<span style="position: relative">
 						<img src="{{ url_for('main.img_static', filename="main-deal/p_0040_profile_pic.png") }}" width="50px" height="50px"/>
 						<div style="background-color:gray;margin:5px;color:white;">
-							ppapu
+							{{ product.user.nick }}
 						</div>
 						<div style="background-color:#3D0820;padding:4px;color:white;margin-top:20px;">
-							12.0
+							{{ product.price }}
 						</div>
 						<div style="background-color:#DBDCDD;padding:4px;color:white;">
 						<img src="{{ url_for('main.img_static', filename="main-deal/p_0031_comment_icon.png") }}" width="15" height="12" />
-						<span style="font-size:12px;">
-						15
-						</span>
-						</div>
-					</span>
-				</div>
-
-				<div class="product-title-area" style="background-color: #dc552c;color:white;">
-					<div class="product-title">수세미 팝니다. 500원</div>
-				</div>
-
-				<div>
-					&nbsp;
-					<button class="btn-hash-tag">#빠푸</button>
-					<button>#빠푸</button>
-					<button>#빠푸</button>
-					<button>#빠푸</button>
-				</div>
-			</div>
-
-		<div class="main-content">
-				<a href = "javascript:void(0)"  onclick = "document.getElementById('light').style.display='block';document.getElementById('fade').style.display='block'">
-					<div class="product-area">
-						<span>
-							<img src="{{ url_for('main.img_static', filename="main-deal/p_0009_pic_ex.png") }}" style="width:100%;height:150px;"/>
-						</span>
-					</div>
-				</a>
-				
-				<div class="profile-area">
-					<span style="position: relative">
-						<img src="{{ url_for('main.img_static', filename="main-deal/p_0040_profile_pic.png") }}") }} width="50px" height="50px"/>
-						<div style="background-color:gray;margin:5px;color:white;">
-							ppapu
-						</div>
-						<div style="background-color:#3D0820;padding:4px;color:white;margin-top:20px;">
-							12.0
-						</div>
-						<div style="background-color:#DBDCDD;padding:4px;color:white;">
-						<img src="{{ url_for('main.img_static', filename="main-deal/p_0031_comment_icon.png") }}") }} width="15" height="12" />
 						<span style="font-size:12px;">
 						15
 						</span>
@@ -323,133 +285,13 @@
 				<div>
 					&nbsp;
 					<button class="btn-hash-tag">#빠푸</button>
-					<button>#빠푸</button>
-					<button>#빠푸</button>
-					<button>#빠푸</button>
+                    {% for tag in product.tag %}
+					<button>#{{ tag.name }}</button>
+                    {% endfor %}
 				</div>
 			</div>
-
-			<div class="main-content">
-				<a href = "javascript:void(0)"  onclick = "document.getElementById('light').style.display='block';document.getElementById('fade').style.display='block'">
-					<div class="product-area">
-						<span>
-							<img src="{{ url_for('main.img_static', filename="main-deal/p_0009_pic_ex.png") }}" style="width:100%;height:150px;"/>
-						</span>
-					</div>
-				</a>
-				
-				<div class="profile-area">
-					<span style="position: relative">
-						<img src="{{ url_for('main.img_static', filename="main-deal/p_0040_profile_pic.png") }}" width="50px" height="50px"/>
-						<div style="background-color:gray;margin:5px;color:white;">
-							ppapu
-						</div>
-						<div style="background-color:#3D0820;padding:4px;color:white;margin-top:20px;">
-							12.0
-						</div>
-						<div style="background-color:#DBDCDD;padding:4px;color:white;">
-						<img src="{{ url_for('main.img_static', filename="main-deal/p_0031_comment_icon.png") }}" width="15" height="12" />
-						<span style="font-size:12px;">
-						15
-						</span>
-						</div>
-					</span>
-				</div>
-
-				<div class="product-title-area" style="background-color: #faa21e;color:white;">
-					<div class="product-title">수세미 팝니다. 500원</div>
-				</div>
-
-				<div>
-					&nbsp;
-					<button class="btn-hash-tag">#빠푸</button>
-					<button>#빠푸</button>
-					<button>#빠푸</button>
-					<button>#빠푸</button>
-				</div>
-			</div>
-
-			<div class="main-content">
-				<a href = "javascript:void(0)"  onclick = "document.getElementById('light').style.display='block';document.getElementById('fade').style.display='block'">
-					<div class="product-area">
-						<span>
-							<img src="{{ url_for('main.img_static', filename="main-deal/p_0009_pic_ex.png") }}" style="width:100%;height:150px;"/>
-						</span>
-					</div>
-				</a>
-				
-				<div class="profile-area">
-					<span style="position: relative">
-						<img src="{{ url_for('main.img_static', filename="main-deal/p_0040_profile_pic.png") }}" width="50px" height="50px"/>
-						<div style="background-color:gray;margin:5px;color:white;">
-							ppapu
-						</div>
-						<div style="background-color:#3D0820;padding:4px;color:white;margin-top:20px;">
-							12.0
-						</div>
-						<div style="background-color:#DBDCDD;padding:4px;color:white;">
-						<img src="{{ url_for('main.img_static', filename="main-deal/p_0031_comment_icon.png") }}" width="15" height="12" />
-						<span style="font-size:12px;">
-						15
-						</span>
-						</div>
-					</span>
-				</div>
-
-				<div class="product-title-area">
-					<div class="product-title">수세미 팝니다. 500원</div>
-				</div>
-
-				<div>
-					&nbsp;
-					<button class="btn-hash-tag">#빠푸</button>
-					<button>#빠푸</button>
-					<button>#빠푸</button>
-					<button>#빠푸</button>
-				</div>
-			</div>
-    </div>
-
-	<div class="content-list-area">
-			<div class="main-content">
-				<a href = "javascript:void(0)"  onclick = "document.getElementById('light').style.display='block';document.getElementById('fade').style.display='block'">
-					<div class="product-area">
-						<span>
-							<img src="{{ url_for('main.img_static', filename="main-deal/p_0009_pic_ex.png") }}" style="width:100%;height:150px;"/>
-						</span>
-					</div>
-				</a>
-				
-				<div class="profile-area">
-					<span style="position: relative">
-						<img src="{{ url_for('main.img_static', filename="main-deal/p_0040_profile_pic.png") }}" width="50px" height="50px"/>
-						<div style="background-color:gray;margin:5px;color:white;">
-							ppapu
-						</div>
-						<div style="background-color:#3D0820;padding:4px;color:white;margin-top:20px;">
-							12.0
-						</div>
-						<div style="background-color:#DBDCDD;padding:4px;color:white;">
-						<img src="{{ url_for('main.img_static', filename="main-deal/p_0031_comment_icon.png") }}" width="15" height="12" />
-						<span style="font-size:12px;">
-						15
-						</span>
-						</div>
-					</span>
-				</div>
-
-				<div class="product-title-area" style="background-color: #3895d0;color:white;">
-					<div class="product-title">수세미 팝니다. 500원</div>
-				</div>
-
-				<div>
-					&nbsp;
-					<button class="btn-hash-tag">#빠푸</button>
-					<button>#빠푸</button>
-					<button>#빠푸</button>
-					<button>#빠푸</button>
-				</div>
-			</div>
+            {% endfor %}
+        </div>
 	
 
 	<div class="floating-footer-menu">
@@ -466,7 +308,6 @@
 		<a class="floating-menu" href="#"><img style="width:40px;height:40px" src="{{ url_for('main.img_static', filename="floating-menu/p_0017_top_btn.png") }}" /></a>
 	</div>
 
-</body>
 <script>
 function test() {
 	alert("TEST");
@@ -496,5 +337,6 @@ function focusOut(index) {
 	}
 }
 </script>
+</body>
 
 </html>
