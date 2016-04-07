@@ -4,10 +4,8 @@ from flask import jsonify, send_from_directory, request, url_for, render_templat
 from flask.ext.login import login_user, login_required, current_user, logout_user
 from sqlalchemy.exc import IntegrityError
 
-from .fb_manager import *
-from .naver_manager import *
-
 from . import user_blueprint
+from .fb_manager import *
 from ..models import *
 
 
@@ -50,11 +48,10 @@ def logout():
     })
 
 
-# For Static
-@user_blueprint.route('/image/<path:filename>')
+@user_blueprint.route('/profile', methods=['GET'])
 @login_required
-def user_image(filename):
-    return send_from_directory(user_blueprint.root_path + '/image/', filename)
+def profile():
+    return render_template('user/user_profile.html')
 
 
 @user_blueprint.route('/fb_login')
@@ -103,3 +100,10 @@ def naver_login():
 @user_blueprint.route('/naver_login/authorized')
 def naver_authorized(resp):
     return ""
+
+
+# For Static
+@user_blueprint.route('/image/<path:filename>')
+@login_required
+def user_image(filename):
+    return send_from_directory(user_blueprint.root_path + '/image/', filename)
