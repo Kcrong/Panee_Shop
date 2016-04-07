@@ -190,7 +190,7 @@
 			</div>
 			<div class="user-info-area">
 				<ul>
-					<a href="user_profile.html">
+					<a href="{{ url_for('user.profile') }}">
 						<li style="margin-left: 34px">
 							<span style="position:relative;">
 								<img src="{{ url_for('main.img_static', filename='main-head/p_0045_main_profile_pic.png') }}" width="40px" height="40px" style="margin-top:10px"/>
@@ -199,7 +199,7 @@
 					</a>
 					<li style="margin:22px 5px">
 						<!-- <a href="#"> -->
-							<span class="userid" style="margin-top:20px;">hayul115</span>
+							<span class="userid" style="margin-top:20px;">{{ current_user.nick }}</span>
 						<!-- </a>		  -->
 					</li>
 					<li style="margin-top:10px;">
@@ -229,14 +229,9 @@
 			<div style="position:relative;z-index: 100;">
 				<ul class="gnb">
 					<li><button class="btn-menu">인기></button></li>
-					<li><button class="btn-menu">#의류</button></li>
-					<li><button class="btn-menu">#악세서리</button></li>
-					<li><button class="btn-menu">#그림</button></li>
-					<li><button class="btn-menu">#요리</button></li>
-					<li><button class="btn-menu">#사진</button></li>
-					<li><button class="btn-menu">#조립</button></li>
-					<li><button class="btn-menu">#생활용품</button></li>
-					<li><button class="btn-menu">#선물</button></li>
+                    {% for tag in top_tag %}
+                        <li><button class="btn-menu">#{{ tag.name }}</button></li>
+                    {% endfor %}
 				</ul>
 			</div>
 
