@@ -1,0 +1,111 @@
+input {
+	padding:4px;
+	border-radius: 3px;
+}
+
+a {
+	text-decoration:underline;
+	font-size:13px;
+	color:#6A6A6A;
+}
+.login-area {
+	position: relative;
+	border-radius: 20px;
+	width:52%;
+	height:310px;
+
+	background-color:#EEEEEE;
+	margin:0 auto;
+
+}
+
+.login-title {
+	font-size:40px;
+	color:white;
+	margin-left:24%;
+}
+
+.line-image {
+	position: absolute;
+	top: 10%;
+    left: 50%;
+    height: 80%;
+}
+
+.btn-confirm-id {
+	position: absolute;
+	background: url("../image/login_png/_0020_id_confirm.png") no-repeat;
+	background-size: 79px 25px;
+	width:79px;
+	height:25px;
+	border:0;
+}
+
+.btn-confirm-email {
+	position: absolute;
+	background: url("../image/login_png/_0006_confirm_email.png") no-repeat;
+	background-size: 79px 25px;
+	width:79px;
+	height:25px;
+	border:0;
+}
+
+.btn-confirm-phone {
+	position: absolute;
+	background: url("../image/login_png/_0009_confirm_phone.png") no-repeat;
+	background-size: 79px 25px;
+	width:79px;
+	height:25px;
+	border:0;
+}
+
+
+.btn-login {
+	position: absolute;
+	top:19%;
+	margin-left:8px;
+	background: url("../image/login_png/_0034_login.png") no-repeat;
+	background-size: 75px 72px;
+	width:75px;
+	height:72px;
+	text-indent: -999em;
+	overflow: hidden;
+	outline: none;
+	cursor: pointer;
+	border: 0;
+}
+
+.btn-signup {
+	width: 245px;
+    height: 30px;
+    font-size: 13px;
+    margin-top:7px;
+}
+
+.visible-hidden {
+	/*visibility:hidden;*/
+	display:none;
+}
+
+#sign-up-step2 {
+	display:none;
+}
+
+.sign-up-line {
+	margin-bottom:5px;
+	margin-right: 37px;
+}
+
+.btn-signup-process {
+	background-color:#AAAAAA;
+	color:white;
+	width:105px;
+	height:25px;
+	border:0;
+	border-radius:5px;
+	margin:13px;
+	margin-left:30%;
+}
+
+
+

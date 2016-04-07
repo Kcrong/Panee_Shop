@@ -1,0 +1,303 @@
+<!doctype html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" href="css/base.css">
+	<link rel="stylesheet" href="css/user-profile.css">
+</head>
+
+<body class="bg-base" background="image/background.jpeg">
+    <div id="content">
+		<header class="header-base">
+			<div class="search-area">
+				<a href="main.html" style="display:block;margin-left:15px;float:left;">
+					<span class="title">
+						PANEE
+					</span>	
+				</a>
+				<span style="display:block;float:left;margin-left:25px;margin-top:13px;">
+					<input type="text" name="keyword" id="search_keyword" class="search-bar" style="outline:none" maxlength="30" value="검색" autocomplete="off" title="검색어 입력" onfocus="ff_focus();" onblur="ff_blur();">
+				</span>
+					<button type="image" class="btn-search" style="border:0;float:left;margin-top:16px;margin-left:16px;"></button>
+
+
+
+					<span style="display:block;float:left;margin-left:20px;margin-top:14px;">
+						<button style="width: 100px;height: 28px;border: 0;border-radius: 10px;color: white;font-size: 16px;">판매</button>
+					</span>
+
+					<span style="position:relative;display:block;float:left;margin-left:20px;margin-top:14px;">
+						<button id="guild" style="width: 100px;height: 28px;border: 0;color: white;font-size: 16px;background-color:#170F36;">
+						길드
+							<div id="myDropdown" class="dropdown-content">
+    							<a href="#home">#프랑스자수</a>
+    							<a href="#about">#뜨개질</a>
+    							<a href="#contact">#피아노</a>
+  							</div>	
+
+						</button>
+						<img src="">
+					</span>
+
+					<script>
+					$("#guild").hover(function(){
+						myFunction();
+					    // $(this).css("background-color", "yellow");
+    				}, function(){
+    					myFunction();
+    					// $(this).css("background-color", "pink");
+					});
+
+					/* When the user clicks on the button, 
+					toggle between hiding and showing the dropdown content */
+					function myFunction() {
+					    document.getElementById("myDropdown").classList.toggle("show");
+					}
+
+					// Close the dropdown if the user clicks outside of it
+					window.hover = function(event) {
+					  if (!event.target.matches('.dropbtn')) {
+
+					    var dropdowns = document.getElementsByClassName("dropdown-content");
+					    var i;
+					    for (i = 0; i < dropdowns.length; i++) {
+					      var openDropdown = dropdowns[i];
+					      if (openDropdown.classList.contains('show')) {
+					        openDropdown.classList.remove('show');
+					      }
+					    }
+					  }
+					}
+					</script>
+					<!-- <img src="image/main-head/p_0047_search_btn.png" /> -->
+	
+			</div>
+			<div class="user-info-area">
+				<ul>
+					<a href="user_profile.html">
+						<li style="margin-left: 34px">
+							<span style="position:relative;">
+								<img src="image/main-head/p_0045_main_profile_pic.png" width="40px" height="40px" style="margin-top:10px">
+							</span>
+						</li>
+					</a>
+					<li style="margin:22px 5px">
+						<!-- <a href="#"> -->
+							<span class="userid" style="margin-top:20px;">hayul115</span>
+						<!-- </a>		  -->
+					</li>
+					<li style="margin-top:10px;">
+						<span>
+							<img src="image/main-head/p_0020_alram_click.png" width="40px" height="40px">
+						</span>
+					</li>
+					<li style="margin-top:10px;">
+						<span>
+							<img src="image/main-head/p_0019_setting_click.png" width="40px" height="40px">
+						</span>	
+					</li>
+				</ul>
+			
+				
+				<!-- <img src="image/main-head/p_0007_profile_bg.png" width="40px" height="40px"/> -->
+			
+
+			
+				
+				
+				
+			</div>
+		</header>
+	</div>
+	<div class="user-profile-base">
+		<div class="user-introduce-area">
+			<!-- <img class="img-user-bg" src="image/user-profile/_0039_subbar_profile_bg.png" /> -->
+			<div style="width:25%;float:left;height:152px;">
+				<div style="position:absolute;top:22px;left:30px">
+					<img src="image/user-profile/_0017_paper_profile_pic.png" />
+				</div>
+			</div>
+			<div style="width:55%;float:left;height:152px;">
+				<div style="font-size:26px;margin-top:26px;">hayul115</div>
+				<div>하늘이 쨍쨍했으면 좋겠다~</div>
+				<div>
+					<button>#빠푸</button>
+					&nbsp;
+					<button>#빠푸</button>
+					&nbsp;
+					<button>#빠푸</button>
+				</div>
+				<div>
+					<span class="guild-tag">자수</span>&nbsp;
+					<span class="guild-tag">자수</span>&nbsp;
+					<span class="guild-tag">자수</span>&nbsp;
+				</div>
+			</div>
+			<div style="width:20%;float:left;height:152px;">
+				<span style="display:block;margin-top:37px;">
+					즐겨찾기 <font color="red">126</font>
+				</span>
+			</div>
+
+		</div>
+		<div style="margin-top:10px;">
+			<label><img src="image/user-profile/_0026_circle_click.png" /></label>
+			<span style="color:white;font-size:17px;">
+				일반+판매
+			</span>
+			&nbsp;
+			<label><img src="image/user-profile/_0025_circle.png" /></label>
+			<span style="color:white;font-size:17px;">
+				판매
+			</span>
+		</div>
+		<div style="height:60px;position:relative;">
+			<div style="margin-top:20px;float:left;">
+				<div class="all-button"></div>
+				<div class="all-button"></div>
+				<div class="withbody"></div>
+				
+				<!-- 전체, 자수, + -->
+			</div>
+
+			<div class="price-menu-area" style="float:right;position:absolute;right:10px;">
+				<p>
+    				<span class="segmented">
+        				<label><input type="radio" name="fruit" value="apple" checked><span class="label">낮은 가격순</span></label>
+        				<label><input type="radio" name="fruit" value="grape"><span class="label">높은 가격순</span></label>
+        				<label><input type="radio" name="fruit" value="orange"><span class="label">최신순</span></label>
+        				<label><input type="radio" name="fruit" value="orange"><span class="label">인기순</span></label>
+    				</span>
+				</p>
+			</div>
+		</div>
+		
+
+	<div class="user-register-content">
+		<div class="main-content">
+				<a href="#">
+					<div class="product-area">
+						<span>
+							<img src="image/main-deal/p_0009_pic_ex.png" style="width:100%;height:150px;"/>
+						</span>
+					</div>
+				</a>
+				
+				<div class="profile-area">
+					<span style="position: relative">
+						<img src="image/main-deal/p_0040_profile_pic.png" width="50px" height="50px"/>
+						<div style="background-color:gray;margin:5px;color:white;">
+							ppapu
+						</div>
+						<div style="background-color:#3D0820;padding:4px;color:white;margin-top:20px;">
+							12.0
+						</div>
+						<div style="background-color:#E2E2E2;padding:4px;color:white;">
+						15
+						</div>
+					</span>
+				</div>
+
+				<div class="product-title-area">
+					<div class="product-title">수세미 팝니다. 500원</div>
+				</div>
+
+				<div>
+					<button>#빠푸</button>
+					<button>#빠푸</button>
+					<button>#빠푸</button>
+					<button>#빠푸</button>
+				</div>
+			</div>
+
+			<div class="main-content" onclick="test();">
+				<a href="#">
+					<div class="product-area">
+						<span>
+							<img src="image/main-deal/p_0009_pic_ex.png" style="width:100%;height:150px;"/>
+						</span>
+					</div>
+				</a>
+				
+				<div class="profile-area">
+					<span style="position: relative">
+						<img src="image/main-deal/p_0040_profile_pic.png" width="50px" height="50px"/>
+						<div style="background-color:gray;margin:5px;color:white;">
+							ppapu
+						</div>
+						<div style="background-color:#3D0820;padding:4px;color:white;margin-top:20px;">
+							12.0
+						</div>
+						<div style="background-color:#E2E2E2;padding:4px;color:white;">
+						15
+						</div>
+					</span>
+				</div>
+
+				<div class="product-title-area">
+					<div class="product-title">수세미 팝니다. 500원</div>
+				</div>
+
+				<div>
+					<button>#빠푸</button>
+					<button>#빠푸</button>
+					<button>#빠푸</button>
+					<button>#빠푸</button>
+				</div>
+			</div>
+
+			<div class="main-content">
+				<a href="#">
+					<div class="product-area">
+						<span>
+							<img src="image/main-deal/p_0009_pic_ex.png" style="width:100%;height:150px;"/>
+						</span>
+					</div>
+				</a>
+				
+				<div class="profile-area">
+					<span style="position: relative">
+						<img src="image/main-deal/p_0040_profile_pic.png" width="50px" height="50px"/>
+						<div style="background-color:gray;margin:5px;color:white;">
+							ppapu
+						</div>
+						<div style="background-color:#3D0820;padding:4px;color:white;margin-top:20px;">
+							12.0
+						</div>
+						<div style="background-color:#E2E2E2;padding:4px;color:white;">
+						15
+						</div>
+					</span>
+				</div>
+
+				<div class="product-title-area">
+					<div class="product-title">수세미 팝니다. 500원</div>
+				</div>
+
+				<div>
+					<button>#빠푸</button>
+					<button>#빠푸</button>
+					<button>#빠푸</button>
+					<button>#빠푸</button>
+				</div>
+			</div>
+	</div>
+	</div>
+
+	<div class="floating-footer-menu">
+		<a onmouseover="mouse(0);" onmouseout="focusOut(0);" class="floating-menu" href="#"><img style="width:40px;height:40px" src="image/floating-menu/_0000_favorite_btn.png" /><div id="favoriteProduct" class="floating-word">즐겨찾기</div></a>
+		<a onmouseover="mouse(1);" onmouseout="focusOut(1);" class="floating-menu" href="#"><img style="width:40px;height:40px" src="image/floating-menu/p_0014_orderCondition_btn.png" /><div id="orderCart" class="floating-word">주문상태</div></a>
+		<a onmouseover="mouse(2);" onmouseout="focusOut(2);" class="floating-menu" href="#">
+			<img style="width:40px;height:40px" src="image/floating-menu/p_0016_write_btn.png" />
+			<div id="sellProduct" class="floating-sell-product">내 판매게시물</div>
+		</a>
+		<a onmouseover="mouse(3);" onmouseout="focusOut(3);" class="floating-menu" href="#">
+			<img style="width:40px;height:40px" src="image/floating-menu/p_0015_sell_btn.png" />
+			<div id="writeContent" class="floating-sell-product">게시물 작성 </div>
+		</a>
+		<a class="floating-menu" href="#"><img style="width:40px;height:40px" src="image/floating-menu/p_0017_top_btn.png" /></a>
+	</div>
+
+
+
+</html>
