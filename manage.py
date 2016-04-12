@@ -8,10 +8,10 @@ import sys
 # For Relative Import
 sys.path.extend([os.path.dirname(os.path.abspath(__file__))])
 
-from app import app, manager
+from app import setting_app, manager
 
+app = setting_app()
 
-# app.wsgi_app = ProxyFix(app.wsgi_app)
 
 @manager.command
 def run():

@@ -39,8 +39,7 @@ def setting_app():
     return app
 
 
-app = setting_app()
-db = SQLAlchemy(app)
+db.init_app(app)
 
 from app.models import *
 
@@ -58,7 +57,7 @@ def load_user(user_id):
 
 
 @app.errorhandler(401)
-def need_login(error):
+def need_login(error=None):
     return redirect(url_for('user.login'))
 
 
