@@ -1,21 +1,19 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+from flask.ext.script import Manager
 
-import os
-import sys
+# from werkzeug.contrib.fixers import ProxyFix
 
-# For Relative Import
-sys.path.extend([os.path.dirname(os.path.abspath(__file__))])
+from app import create_app
 
-from app import setting_app, manager
 
-app = setting_app()
-
+app = create_app()
+# app.wsgi_app = ProxyFix(app.wsgi_app)
+manager = Manager(app)
 
 @manager.command
 def run():
     app.run()
-
 
 if __name__ == "__main__":
     manager.run()
