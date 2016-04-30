@@ -1,0 +1,64 @@
+@import "core/core";
+@import "constants";
+
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+ul, li {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  cursor: pointer;
+  color: inherit;
+  text-decoration: none;
+  &:active, &:hover, &:focus, &:visited {
+    outline: 0;
+  }
+}
+
+body{
+  margin: 0;
+}
+
+.app{
+  width: 100%;
+  >div{
+
+  }
+
+  .view{
+    >div{
+      max-width: $desktop-width;
+      margin: 0 auto;
+    }
+  }
+}
+
+$two-divide-line-width: 2px;
+$two-divide-border: 2px solid #A1A1A2;
+$two-divide-padding: 1.5em;
+
+.two-divide__container{
+  padding-left: $two-divide-line-width;
+  padding-right: $two-divide-line-width;
+  @include set-grid-horizonal-padding-and-margin($two-divide-line-width, 50%);
+
+  .two-divide__left{
+    text-align: right;
+    border-right: $two-divide-border;
+    padding-right: $two-divide-padding;
+  }
+  .two-divide__right{
+    text-align: left;
+    border-left: $two-divide-border;
+    padding-left: $two-divide-padding;
+  }
+}
+
+@import "_layouts/header";

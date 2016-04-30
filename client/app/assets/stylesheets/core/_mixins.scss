@@ -1,0 +1,45 @@
+// Mixins
+// --------------------------------------------------
+
+// jay
+@import "mixins/jay/layout";
+@import "mixins/jay/fonts";
+@import "mixins/jay/components";
+
+// Utilities
+@import "mixins/bootstrap/hide-text";
+@import "mixins/bootstrap/opacity";
+@import "mixins/bootstrap/image";
+@import "mixins/bootstrap/labels";
+@import "mixins/bootstrap/reset-filter";
+@import "mixins/bootstrap/resize";
+@import "mixins/bootstrap/responsive-visibility";
+@import "mixins/bootstrap/size";
+@import "mixins/bootstrap/tab-focus";
+@import "mixins/bootstrap/reset-text";
+@import "mixins/bootstrap/text-emphasis";
+@import "mixins/bootstrap/text-overflow";
+@import "mixins/bootstrap/vendor-prefixes";
+
+// Components
+@import "mixins/bootstrap/alerts";
+@import "mixins/bootstrap/buttons";
+@import "mixins/bootstrap/panels";
+@import "mixins/bootstrap/pagination";
+@import "mixins/bootstrap/list-group";
+@import "mixins/bootstrap/nav-divider";
+@import "mixins/bootstrap/forms";
+@import "mixins/bootstrap/progress-bar";
+@import "mixins/bootstrap/table-row";
+
+// Skins
+@import "mixins/bootstrap/background-variant";
+@import "mixins/bootstrap/border-radius";
+@import "mixins/bootstrap/gradients";
+
+// Layout
+@import "mixins/bootstrap/clearfix";
+@import "mixins/bootstrap/center-block";
+@import "mixins/bootstrap/nav-vertical-align";
+@import "mixins/bootstrap/grid-framework";
+@import "mixins/bootstrap/grid";

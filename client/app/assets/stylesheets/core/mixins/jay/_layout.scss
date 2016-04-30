@@ -1,0 +1,117 @@
+/** layout **/
+
+@mixin reset-padding($padding: 0px) {
+  padding: $padding;
+}
+
+@mixin reset-margin($margin: 0px) {
+  margin: $margin;
+}
+
+@mixin set-min-width($min-width: 768px) {
+  min-width: $min-width;
+}
+
+@mixin set-grid-padding($padding){
+  & {
+    .row {
+      margin-left: $padding * -1;
+      margin-right: $padding * -1;
+    }
+    [class^="col-"]{
+      padding-left: $padding;
+      padding-right: $padding;
+    }
+  }
+}
+
+@mixin set-grid-horizonal-padding-and-margin($child, $nestedChild, $value){
+  padding-left: $value;
+  padding-right: $value;
+  #{$child}{
+    margin-left: $value * -1;
+    margin-right: $value * -1;
+    #{$nestedChild}{
+      padding-left: $value;
+      padding-right: $value;
+    }
+  }
+  @include media("<phoneWidth"){
+    padding-left: 0;
+    padding-right: 0;
+    #{$child}{
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+}
+
+@mixin set-grid-horizonal-padding-and-margin($value, $width){
+  padding-left: $value;
+  padding-right: $value;
+  >div{
+    margin-left: $value * -1;
+    margin-right: $value * -1;
+    >div{
+      padding-left: $value;
+      padding-right: $value;
+      display: inline-block;
+      width: $width;
+      float: left;
+    }
+  }
+  @include media("<phoneWidth"){
+    padding-left: 0;
+    padding-right: 0;
+    >div{
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+}
+
+@mixin set-grid-vertical-padding-and-margin($child, $nestedChild, $value){
+  #{$child}{
+    margin-top: $value * -1;
+    margin-bottom: $value * -1;
+    #{$nestedChild}{
+      padding-top: $value;
+      padding-bottom: $value;
+    }
+  }
+}
+
+/** label,title **/
+@mixin title-left-bar($color: $text-color, $width: 3px){
+  border-left: $width solid $color;
+  padding-left: 10px;
+}
+
+@function translate-media-condition($c) {
+  $condMap: (
+          "screen": "only screen",
+          "print": "only print",
+          "retina": "(-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3/2), (min-device-pixel-ratio: 1.5), (min-resolution: 120dpi)",
+          ">desktopWidth": "(min-width: #{$desktop-width + 1})",
+          "<desktopWidth": "(max-width: #{$desktop-width})",
+          ">tabletWidth": "(min-width: #{$desktop-width + 1})",
+          "<tabletWidth": "(max-width: #{$desktop-width})",
+          ">phoneWidth": "(min-width: #{$desktop-width + 1})",
+          "<phoneWidth": "(max-width: #{$desktop-width})"
+  );
+
+  @return map-get( map-merge($condMap,$addCondMap), $c );
+}
+
+// The mdia mixin
+@mixin media($args...) {
+  $query: "";
+  @each $arg in $args {
+    $op: "";
+    @if ( $query != "" ) {
+      $op: " and ";
+    }
+    $query: $query + $op + translate-media-condition($arg);
+  }
+  @media #{$query}  { @content; }
+}

@@ -1,0 +1,246 @@
+/*
+This is CORE SCSS for common little style, not moudule.
+Moudule concept need in APP SCSS.
+USED with bootstrap's variables and mixins
+AND slogup's core-mixins in ./mixins
+*/
+/** layout **/
+/** label,title **/
+button, textarea {
+  background: none;
+  outline: none;
+  border: none;
+  resize: none;
+  padding: 0;
+  margin: 0; }
+
+/** component **/
+.col-xs-offset-right-12 {
+  margin-right: 100%; }
+
+.col-xs-offset-right-11 {
+  margin-right: 91.66666667%; }
+
+.col-xs-offset-right-10 {
+  margin-right: 83.33333333%; }
+
+.col-xs-offset-right-9 {
+  margin-right: 75%; }
+
+.col-xs-offset-right-8 {
+  margin-right: 66.66666667%; }
+
+.col-xs-offset-right-7 {
+  margin-right: 58.33333333%; }
+
+.col-xs-offset-right-6 {
+  margin-right: 50%; }
+
+.col-xs-offset-right-5 {
+  margin-right: 41.66666667%; }
+
+.col-xs-offset-right-4 {
+  margin-right: 33.33333333%; }
+
+.col-xs-offset-right-3 {
+  margin-right: 25%; }
+
+.col-xs-offset-right-2 {
+  margin-right: 16.66666667%; }
+
+.col-xs-offset-right-1 {
+  margin-right: 8.33333333%; }
+
+.col-xs-offset-right-0 {
+  margin-right: 0; }
+
+@media (min-width: 768px) {
+  .col-sm-offset-right-12 {
+    margin-right: 100%; }
+
+  .col-sm-offset-right-11 {
+    margin-right: 91.66666667%; }
+
+  .col-sm-offset-right-10 {
+    margin-right: 83.33333333%; }
+
+  .col-sm-offset-right-9 {
+    margin-right: 75%; }
+
+  .col-sm-offset-right-8 {
+    margin-right: 66.66666667%; }
+
+  .col-sm-offset-right-7 {
+    margin-right: 58.33333333%; }
+
+  .col-sm-offset-right-6 {
+    margin-right: 50%; }
+
+  .col-sm-offset-right-5 {
+    margin-right: 41.66666667%; }
+
+  .col-sm-offset-right-4 {
+    margin-right: 33.33333333%; }
+
+  .col-sm-offset-right-3 {
+    margin-right: 25%; }
+
+  .col-sm-offset-right-2 {
+    margin-right: 16.66666667%; }
+
+  .col-sm-offset-right-1 {
+    margin-right: 8.33333333%; }
+
+  .col-sm-offset-right-0 {
+    margin-right: 0; } }
+@media (min-width: 992px) {
+  .col-md-offset-right-12 {
+    margin-right: 100%; }
+
+  .col-md-offset-right-11 {
+    margin-right: 91.66666667%; }
+
+  .col-md-offset-right-10 {
+    margin-right: 83.33333333%; }
+
+  .col-md-offset-right-9 {
+    margin-right: 75%; }
+
+  .col-md-offset-right-8 {
+    margin-right: 66.66666667%; }
+
+  .col-md-offset-right-7 {
+    margin-right: 58.33333333%; }
+
+  .col-md-offset-right-6 {
+    margin-right: 50%; }
+
+  .col-md-offset-right-5 {
+    margin-right: 41.66666667%; }
+
+  .col-md-offset-right-4 {
+    margin-right: 33.33333333%; }
+
+  .col-md-offset-right-3 {
+    margin-right: 25%; }
+
+  .col-md-offset-right-2 {
+    margin-right: 16.66666667%; }
+
+  .col-md-offset-right-1 {
+    margin-right: 8.33333333%; }
+
+  .col-md-offset-right-0 {
+    margin-right: 0; } }
+@media (min-width: 1200px) {
+  .col-lg-offset-right-12 {
+    margin-right: 100%; }
+
+  .col-lg-offset-right-11 {
+    margin-right: 91.66666667%; }
+
+  .col-lg-offset-right-10 {
+    margin-right: 83.33333333%; }
+
+  .col-lg-offset-right-9 {
+    margin-right: 75%; }
+
+  .col-lg-offset-right-8 {
+    margin-right: 66.66666667%; }
+
+  .col-lg-offset-right-7 {
+    margin-right: 58.33333333%; }
+
+  .col-lg-offset-right-6 {
+    margin-right: 50%; }
+
+  .col-lg-offset-right-5 {
+    margin-right: 41.66666667%; }
+
+  .col-lg-offset-right-4 {
+    margin-right: 33.33333333%; }
+
+  .col-lg-offset-right-3 {
+    margin-right: 25%; }
+
+  .col-lg-offset-right-2 {
+    margin-right: 16.66666667%; }
+
+  .col-lg-offset-right-1 {
+    margin-right: 8.33333333%; }
+
+  .col-lg-offset-right-0 {
+    margin-right: 0; } }
+/* add variables to $condMap in @media */
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
+
+ul, li {
+  list-style-type: none;
+  margin: 0;
+  padding: 0; }
+
+a {
+  cursor: pointer;
+  color: inherit;
+  text-decoration: none; }
+  a:active, a:hover, a:focus, a:visited {
+    outline: 0; }
+
+body {
+  margin: 0; }
+
+.app {
+  width: 100%; }
+  .app .view > div {
+    max-width: 1280px;
+    margin: 0 auto; }
+
+.two-divide__container {
+  padding-left: 2px;
+  padding-right: 2px;
+  padding-left: 2px;
+  padding-right: 2px; }
+  .two-divide__container > div {
+    margin-left: -2px;
+    margin-right: -2px; }
+    .two-divide__container > div > div {
+      padding-left: 2px;
+      padding-right: 2px;
+      display: inline-block;
+      width: 50%;
+      float: left; }
+  @media (max-width: 1280px) {
+    .two-divide__container {
+      padding-left: 0;
+      padding-right: 0; }
+      .two-divide__container > div {
+        margin-left: 0;
+        margin-right: 0; } }
+  .two-divide__container .two-divide__left {
+    text-align: right;
+    border-right: 2px solid #A1A1A2;
+    padding-right: 1.5em; }
+  .two-divide__container .two-divide__right {
+    text-align: left;
+    border-left: 2px solid #A1A1A2;
+    padding-left: 1.5em; }
+
+.header {
+  background: #e7eff2; }
+  .header ul {
+    text-align: center;
+    margin: 0 auto;
+    max-width: 1280px; }
+    .header ul li {
+      display: inline-block;
+      padding: 5px 20px;
+      border-left: 1px solid #93A0A2;
+      margin: 10px 0;
+      font-weight: bold; }
+      .header ul li:first-child {
+        border: 0; }
+
+/*# sourceMappingURL=main.css.map */

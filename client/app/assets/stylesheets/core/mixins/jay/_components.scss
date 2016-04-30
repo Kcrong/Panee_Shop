@@ -1,0 +1,63 @@
+button, textarea {
+  background: none;
+  outline: none;
+  border: none;
+  resize: none;
+  padding: 0;
+  margin: 0;
+}
+
+/** component **/
+@mixin set-border($border-color, $border-radius, $border-width: 1px, $border-style: solid){
+  border: $border-width $border-style $border-color;
+  border-radius: $border-radius;
+}
+
+@mixin set-btn($width, $height, $background-color, $font-color, $border-color, $border-radius){
+  width: $width;
+  color: $font-color;
+  font-size: 1em;
+  text-align: center;
+  background: $background-color;
+  padding: 0px;
+  @include set-text-vertical-center($height, 0);
+  @include set-border($border-color, $border-radius);
+  &:hover{
+    color: $background-color;
+    background: $font-color;
+  }
+}
+
+@mixin img-responsive(){
+  max-width: 100%;
+  display:block;
+  height: auto;
+}
+
+@mixin img-bg-cover-wrapper($height){
+  position: relative;
+  margin: 0;
+  height: $height;
+  overflow: hidden;
+  & > img{
+    @include img-bg-cover();
+  }
+}
+
+@mixin img-bg-cover(){
+  min-height: 100%;
+  min-width: 100%;
+  max-width: 120%;
+  height: auto;
+  width: auto;
+  position: absolute;
+  top: -50%; bottom: -50%;
+  left: -50%; right: -50%;
+  margin:auto;
+}
+
+@mixin set-first-child-border-default(){
+  &:first-child{
+    border: 0;
+  }
+}
