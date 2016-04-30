@@ -7,4 +7,4 @@ from . import main_blueprint
 
 @main_blueprint.route('/')
 def index():
-    return render_template('sample.html')
+    return render_template('main/index.html')
