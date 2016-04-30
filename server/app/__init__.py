@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 import logging
+import os
 
 from flask import Flask, redirect, url_for
 from flask.ext.login import LoginManager
@@ -32,6 +33,8 @@ def setting_app():
 
     app.register_blueprint(main_blueprint)
     app.register_blueprint(user_blueprint, url_prefix='/user')
+
+    app.static_folder = os.path.join(app.root_path, '../../', 'client', 'app')
 
     app.config.from_pyfile('../config.py')
 
