@@ -1,0 +1,6 @@
+$desktop-width: 1280px;
+
+/* add variables to $condMap in @media */
+$addCondMap: (
+        "<iphone4Width": "(max-width: #{$desktop-width})"
+);
