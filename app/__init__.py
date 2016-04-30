@@ -7,9 +7,11 @@ from flask.ext.login import LoginManager
 from flask.ext.migrate import Migrate, MigrateCommand
 from flask.ext.script import Manager
 from flask.ext.sqlalchemy import SQLAlchemy
-
-import pymysql
-pymysql.install_as_MySQLdb()
+try:
+    import MySQLdb
+except ImportError:
+    import pymysql
+    pymysql.install_as_MySQLdb()
 
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.DEBUG)
 
