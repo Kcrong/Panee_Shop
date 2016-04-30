@@ -6,7 +6,7 @@ from flask.ext.script import Manager
 import os.path
 
 app = Flask(__name__)
-template_path = os.path.join(app.root_path, 'client', 'app')
+template_path = os.path.join(app.root_path, 'client')
 
 
 def create_app():
@@ -15,7 +15,7 @@ def create_app():
     return app
 
 
-@app.route('/index')
+@app.route('/')
 def testing():
     return render_template('index.html')
 
