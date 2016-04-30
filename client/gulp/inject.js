@@ -10,7 +10,7 @@ var config = {
 
 
 gulp.task('index-lib', function () {
-    gulp.src('./server/views/sample.ejs')
+    gulp.src('./server/views/sample.html')
         .pipe($.inject(gulp.src(bowerFiles({
             path: {
                 bowerDirectory: 'lib',
