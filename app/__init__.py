@@ -1,28 +1,18 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
-from flask import Flask, render_template, url_for, send_from_directory
+from flask import Flask
 from flask.ext.script import Manager
 
-import os.path
-
 app = Flask(__name__)
-template_path = os.path.join(app.root_path, 'client')
 
 
 def create_app():
+    from .main import main_blueprint
+
+    app.register_blueprint(main_blueprint)
+
     app.config.from_pyfile('../config.py')
 
     return app
-
-
-@app.route('/')
-def testing():
-    return render_template('index.html')
-
-
-@app.route('/<path:filename>')
-def static_files(filename):
-    return send_from_directory(template_path, filename=filename)
-
 
 manager = Manager(app)
