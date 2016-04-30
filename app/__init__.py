@@ -28,13 +28,9 @@ login_manager = LoginManager()
 def setting_app():
     from app.main import main_blueprint
     from app.user import user_blueprint
-    from app.shop import shop_blueprint
-    from app.tag import tag_blueprint
 
     app.register_blueprint(main_blueprint)
     app.register_blueprint(user_blueprint, url_prefix='/user')
-    app.register_blueprint(shop_blueprint, url_prefix='/shop')
-    app.register_blueprint(tag_blueprint, url_prefix='/tag')
 
     app.config.from_pyfile('../config.py')
 
