@@ -108,6 +108,6 @@ ENV/
 # Created by .ignore support plugin (hsz.mobi)
 
 # client gitignore
-client/node_modules/
-client/lib/
+node_modules/
+app/client/lib/
 
