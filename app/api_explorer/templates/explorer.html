@@ -137,7 +137,7 @@ Result Area
                     document.getElementById('api_result').innerHTML = JSON.stringify(response, undefined, 2);
                 },
                 error: function(response) {
-                    document.getElementById('api_result').innerHTML = JSON.stringify(response, undefined, 2);
+                    document.getElementById('api_result').innerHTML = JSON.stringify(response['responseJSON'], undefined, 2);
                 }
             });
             return false;
