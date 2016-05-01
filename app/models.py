@@ -10,6 +10,7 @@ class User(db.Model):
     name = db.Column(db.String(20), nullable=False)
     email = db.Column(db.String(50), nullable=False, unique=True)
     nickname = db.Column(db.String(50), nullable=False, unique=True)
+    active = db.Column(db.Boolean, default=True, nullable=False)
 
     def __init__(self, userid, userpw, name, email, nickname):
         self.userid = userid
