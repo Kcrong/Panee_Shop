@@ -5,20 +5,30 @@ from app.static_string import json_message
 
 def login_required(func):
     def check_login(*args, **kwargs):
-        if session['login'] is True:
-            func(*args, **kwargs)
-        else:
-            return json_message("Login Required", 401)
+        try:
+            session['login']
+        except KeyError:
+            session['login'] = False
+        finally:
+            if session['login'] is True:
+                return func(*args, **kwargs)
+            else:
+                return json_message("Login Required", 401)
 
     return check_login
 
 
 def logout_required(func):
     def check_logout(*args, **kwargs):
-        if session['login'] is False:
-            func(*args, **kwargs)
-        else:
-            return json_message("Logout Required", 401)
+        try:
+            session['login']
+        except KeyError:
+            session['login'] = False
+        finally:
+            if session['login'] is False:
+                return func(*args, **kwargs)
+            else:
+                return json_message("Logout Required", 401)
 
     return check_logout
 
