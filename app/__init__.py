@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
-from flask import Flask
+from flask import Flask, session
 from flask.ext.script import Manager
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.migrate import Migrate, MigrateCommand
@@ -9,12 +9,18 @@ try:
     import MySQLdb
 except ImportError:
     import pymysql
+
     pymysql.install_as_MySQLdb()
 
 from .static_string import *
 
 app = Flask(__name__)
 db = SQLAlchemy()
+
+
+def setting_session():
+    session['login'] = False
+    session['userid'] = None
 
 
 def create_app():
@@ -30,7 +36,10 @@ def create_app():
 
     app.config.from_pyfile('../config.py')
 
+    app.before_first_request(setting_session)
+
     return app
+
 
 manager = Manager(app)
 manager.add_command('db', MigrateCommand)
