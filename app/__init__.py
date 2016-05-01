@@ -2,10 +2,12 @@
 # -*- coding:utf-8 -*-
 from flask import Flask
 from flask.ext.script import Manager
+from flask.ext.sqlalchemy import SQLAlchemy
 
 from .static_string import *
 
 app = Flask(__name__)
+db = SQLAlchemy()
 
 
 def create_app():
@@ -24,3 +26,5 @@ def create_app():
     return app
 
 manager = Manager(app)
+
+db.init_app(app)
