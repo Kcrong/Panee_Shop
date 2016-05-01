@@ -15,7 +15,7 @@ def login_required(func):
 
 def logout_required(func):
     def check_logout(*args, **kwargs):
-        if session['login'] is True:
+        if session['login'] is False:
             func(*args, **kwargs)
         else:
             return json_message("Logout Required", 401)
