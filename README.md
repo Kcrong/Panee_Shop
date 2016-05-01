@@ -1,3 +1,8 @@
+# API Explorer
+실행 후, 아래 url 접속
+http://localhost:5000/explorer
+
+
 # 서버 실행 커맨드 정리
     
 ## 처음 이용시
