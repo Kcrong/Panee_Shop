@@ -29,6 +29,7 @@ EXPLORER_TEMPLATE_PATH = path.join(EXPLORER_PATH, 'templates')
 
 
 def json_message(message="Success", code=200):
-    response = jsonify({'message': message})
+    response = jsonify({'message': message,
+                        'status': code})
     response.status_code = code
     return response
