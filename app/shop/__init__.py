@@ -3,12 +3,12 @@
 
 from flask import Blueprint
 from flask_restful import Api
-from app.static_string import *
+from app.static_string import SHOP_NAME
 
-user_api = Api()
-user_blueprint = Blueprint(USER_NAME, __name__)
+shop_api = Api()
+shop_blueprint = Blueprint(SHOP_NAME, __name__)
 
-user_api.init_app(user_blueprint)
+shop_api.init_app(shop_blueprint)
 
 from . import views
 from .views import *
