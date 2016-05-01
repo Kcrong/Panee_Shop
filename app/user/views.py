@@ -5,11 +5,12 @@ from flask import request
 from flask_restful import Resource, reqparse
 
 from app.static_string import USER_LOGIN_URL, USER_LOGOUT_URL, USER_REGISTER_URL
-from config import USE_METHOD
+from config import USE_METHOD, DEBUG
 from . import user_api
 from app.models import User, db
 from app.static_string import json_message
 from .login_manager import login_required, login_user, logout_user, logout_required
+from sqlalchemy.exc import IntegrityError
 
 
 @user_api.resource(USER_LOGIN_URL)
@@ -44,9 +45,21 @@ class Register(Resource):
         u = User(args['userid'], args['userpw'], args['name'], args['email'], args['nickname'])
 
         db.session.add(u)
-        db.session.commit()
+        try:
+            db.session.commit()
+        except IntegrityError as e:
+            db.session.rollback()
 
-        return json_message()
+            if DEBUG:
+                dup = e.args[0].split(':')[1].split('.')[1]
+            else:
+                dup = e.message.split('for key')[1].split("'")[1]
+            message = "%s is duplicate" % dup
+
+            return json_message(message, 400)
+
+        else:
+            return json_message()
 
 
 user_parser = {
