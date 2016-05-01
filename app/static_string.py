@@ -9,6 +9,7 @@ USER_NAME = 'user'
 USER_URL_PREFIX = '/user'
 USER_LOGIN_URL = '/login'
 USER_LOGOUT_URL = '/logout'
+USER_REGISTER_URL = '/register'
 
 # SHOP URL
 SHOP_NAME = 'shop'
