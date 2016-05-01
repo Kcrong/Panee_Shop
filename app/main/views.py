@@ -1,13 +1,16 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
-from flask import render_template, send_from_directory, url_for
-import os.path
+from flask import render_template, send_from_directory
 
 from . import main_blueprint
+from config import STATIC_FOLDER
 
-static_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../../../', 'client', 'app')
 
-
-@main_blueprint.route('/index')
+@main_blueprint.route('/')
 def index():
     return render_template('index.html')
+
+
+@main_blueprint.route('/<path:filename>')
+def static_files(filename):
+    return send_from_directory(STATIC_FOLDER, filename)
