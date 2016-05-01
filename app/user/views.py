@@ -19,10 +19,15 @@ class Login(Resource):
         self.parser = user_parser[USER_LOGIN_URL][request.method]
         self.args = self.parser.parse_args()
 
-    @login_required
+    @logout_required
     def post(self):
         args = self.args
-        u = User.query.filter_by(userid=args['userid'], userpw=args['userpw'], active=True).first_or_404()
+        u = User.query.filter_by(userid=args['userid'], userpw=args['userpw'], active=True).first()
+        if u is None:
+            return json_message('Invalid ID or PW', 400)
+        else:
+            login_user(u.userid)
+            return json_message()
 
 
 @user_api.resource(USER_LOGOUT_URL)
