@@ -17,10 +17,6 @@ class Login(Resource):
     def __init__(self):
         self.parser = user_parser[USER_LOGIN_URL][request.method]
 
-    def get(self):
-        login_user('asdf')
-        return json_message()
-
     @login_required
     def post(self):
         args = self.parser.parse_args()
