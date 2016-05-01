@@ -1,6 +1,10 @@
 import os
 
-DEBUG = os.environ['FLASK_DEBUG'] == 'true'
+try:
+    DEBUG = os.environ['FLASK_DEBUG'] == 'true'
+except KeyError:
+    DEBUG = False
+
 if DEBUG:
     SQLALCHEMY_DATABASE_URI = 'sqlite:////tmp/testdb.db'
 else:
