@@ -2,11 +2,13 @@
 # -*- coding:utf-8 -*-
 
 from flask import Blueprint
-from flask_restful import Api, reqparse
-from config import USE_METHOD
+from flask_restful import Api
+from app.static_string import *
 
-user_blueprint = Blueprint('user', __name__)
-user_api = Api(user_blueprint)
-user_parser = {method: reqparse.RequestParser() for method in USE_METHOD}
+user_api = Api()
+user_blueprint = Blueprint(USER_NAME, __name__)
+
+user_api.init_app(user_blueprint)
 
 from . import views
+from .views import *
