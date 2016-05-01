@@ -4,13 +4,23 @@ from app.static_string import json_message
 
 
 def login_required(func):
-    def newFunc(*args, **kwargs):
+    def check_login(*args, **kwargs):
         if session['login'] is True:
             func(*args, **kwargs)
         else:
             return json_message("Login Required", 401)
 
-    return newFunc
+    return check_login
+
+
+def logout_required(func):
+    def check_logout(*args, **kwargs):
+        if session['login'] is True:
+            func(*args, **kwargs)
+        else:
+            return json_message("Login Required", 401)
+
+    return check_logout
 
 
 def login_user(userid):
