@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
-from app import db
 from datetime import datetime
+
+from app import db
 
 
 def get_or_create(session, model, **kwargs):
