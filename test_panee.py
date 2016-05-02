@@ -1,8 +1,4 @@
 # -*-coding: utf-8 -*-
-import os
-import sys
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-
 from flask.ext.testing import TestCase, LiveServerTestCase
 
 from app.models import *
@@ -82,7 +78,7 @@ class UserTestCase(BaseTestCase):
         self.assert401(self.login(userid, userpw))
 
         self.assert200(self.register(userid, userpw, name, email, nickname))
-        self.assert200(self.register(userid*2, userpw*2, name*2, email*2, nickname*2))
+        self.assert200(self.register(userid * 2, userpw * 2, name * 2, email * 2, nickname * 2))
 
         self.assert400(self.register(userid, userpw, name, email, nickname))
 
@@ -94,7 +90,7 @@ class UserTestCase(BaseTestCase):
 
         self.assert400(self.delete('asdf', 'asdf'))
 
-        self.assert401(self.delete(userid*2, userpw*2))
+        self.assert401(self.delete(userid * 2, userpw * 2))
 
         self.assert200(self.delete(userid, userpw))
 
@@ -114,3 +110,9 @@ class ModelingTestCase(BaseTestCase):
         db.session.commit()
 
         assert u not in db.session
+
+
+if __name__ == '__main__':
+    import unittest
+
+    unittest.main()
