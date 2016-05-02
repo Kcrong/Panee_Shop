@@ -24,7 +24,7 @@ class Login(Resource):
         args = self.args
         u = User.query.filter_by(userid=args['userid'], userpw=args['userpw'], active=True).first()
         if u is None:
-            return json_message('Invalid ID or PW', 400)
+            return json_message('Invalid ID or PW', 401)
         else:
             login_user(u.userid)
             return json_message()
@@ -56,10 +56,11 @@ class Register(Resource):
         except IntegrityError as e:
             db.session.rollback()
 
-            if DEBUG:
-                dup = e.args[0].split(':')[1].split('.')[1]
-            else:
+            try:
                 dup = e.message.split('for key')[1].split("'")[1]
+            except AttributeError:
+                dup = e.args[0].split(':')[1].split('.')[1]
+
             message = "%s is duplicate" % dup
 
             return json_message(message, 400)
@@ -74,7 +75,7 @@ class Register(Resource):
         if u is None:
             return json_message('No user. maybe deleted?', 400)
         elif u.userid != current_user().userid:
-            return json_message('Diff login user and request user', 400)
+            return json_message('Diff login user and request user', 401)
         else:
             u.active = False
             db.session.commit()
