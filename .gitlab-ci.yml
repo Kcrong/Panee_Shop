@@ -4,4 +4,4 @@ before_script:
 
 flask:
   script:
-    - python tests/test_panee.py
+    - python3 tests/test_panee.py
