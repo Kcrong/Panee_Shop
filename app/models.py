@@ -3,6 +3,17 @@
 from app import db
 
 
+def get_or_create(session, model, **kwargs):
+    instance = session.query(model).filter_by(**kwargs).first()
+    if instance:
+        return instance
+    else:
+        instance = model(**kwargs)
+        session.add(instance)
+        session.commit()
+        return instance
+
+
 class User(db.Model):
     id = db.Column(db.INTEGER, primary_key=True)
     userid = db.Column(db.String(50), unique=True, nullable=False)
