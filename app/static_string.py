@@ -4,6 +4,8 @@ path = os.path
 
 from flask import jsonify
 
+APP_PATH = path.dirname(path.abspath(__file__))
+
 # USER URL
 USER_NAME = 'user'
 USER_URL_PREFIX = '/user'
@@ -23,7 +25,7 @@ EXPLORER_INDEX_URL = '/index'
 EXPLORER_STATIC_URL = '/'
 
 # EXPLORER PATH
-EXPLORER_PATH = path.join(path.dirname(path.abspath(__file__)), 'api_explorer')
+EXPLORER_PATH = path.join(APP_PATH, 'api_explorer')
 EXPLORER_STATIC_PATH = path.join(EXPLORER_PATH, 'static')
 EXPLORER_TEMPLATE_PATH = path.join(EXPLORER_PATH, 'templates')
 
