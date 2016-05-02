@@ -27,6 +27,13 @@ EXPLORER_PATH = path.join(path.dirname(path.abspath(__file__)), 'api_explorer')
 EXPLORER_STATIC_PATH = path.join(EXPLORER_PATH, 'static')
 EXPLORER_TEMPLATE_PATH = path.join(EXPLORER_PATH, 'templates')
 
+# FOR TESTCASE
+TEST_USERID = 'test'
+TEST_USERPW = 'test'
+TEST_USERNAME = '이름'
+TEST_USER_EMAIL = 'email@email.com'
+TEST_USER_NICKNAME = 'testnick'
+
 
 def json_message(message="Success", code=200):
     response = jsonify({'message': message,
