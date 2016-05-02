@@ -4,5 +4,4 @@ before_script:
 
 flask:
   script:
-    - cd tests
     - python3 test_panee.py
