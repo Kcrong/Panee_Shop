@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 from app import db
+from datetime import datetime
 
 
 def get_or_create(session, model, **kwargs):
@@ -22,6 +23,8 @@ class User(db.Model):
     email = db.Column(db.String(50), nullable=False, unique=True)
     nickname = db.Column(db.String(50), nullable=False, unique=True)
     active = db.Column(db.Boolean, default=True, nullable=False)
+    created = db.Column(db.DATETIME, default=datetime.now(), nullable=False)
+    updated = db.Column(db.DATETIME, default=datetime.now(), nullable=False, onupdate=datetime.now())
 
     def __init__(self, userid, userpw, name, email, nickname):
         self.userid = userid
