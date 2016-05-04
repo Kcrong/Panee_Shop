@@ -27,6 +27,7 @@ class User(db.Model):
     active = db.Column(db.Boolean, default=True, nullable=False)
     created = db.Column(db.DATETIME, default=datetime.now(), nullable=False)
     updated = db.Column(db.DATETIME, default=datetime.now(), nullable=False, onupdate=datetime.now())
+    shop = db.relationship('Shop')
 
     def __init__(self, userid, userpw, name, email, nickname):
         self.userid = userid
@@ -46,3 +47,12 @@ class User(db.Model):
                             nickname=self.nickname,
                             created=self.created,
                             updated=self.updated))
+
+
+class Shop(db.Model):
+    id = db.Column(db.INTEGER, primary_key=True)
+    title = db.Column(db.String(100), nullable=False)
+    writer = db.Column(db.INTEGER, db.ForeignKey('user.id'))
+
+    def __init__(self, title):
+        self.title = title

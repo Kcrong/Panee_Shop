@@ -38,6 +38,8 @@ TEST_USERNAME = '이름'
 TEST_USER_EMAIL = 'email@email.com'
 TEST_USER_NICKNAME = 'testnick'
 
+TEST_SHOPNAME = '상품명'
+
 
 def json_message(message="Success", code=200):
     response = jsonify({'message': message,

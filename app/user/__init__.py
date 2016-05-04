@@ -10,5 +10,4 @@ user_blueprint = Blueprint(USER_NAME, __name__)
 
 user_api.init_app(user_blueprint)
 
-from . import views
 from .views import *
