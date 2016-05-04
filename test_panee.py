@@ -13,7 +13,7 @@ class BaseTestCase(TestCase):
         app.config['SECRET_KEY'] = 'development-test-key'
         app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:'
         app.config['TESTING'] = True
-        app.config['DEBUG'] = True
+        app.config['DEBUG'] = False
 
         return app
 
