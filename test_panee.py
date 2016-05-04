@@ -11,7 +11,7 @@ from app.static_string import *
 class BaseTestCase(TestCase):
     def create_app(self):
         app.config['SECRET_KEY'] = 'development-test-key'
-        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:'  # + join(test_cwd, 'flask-tracking.db')
+        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:'
         app.config['TESTING'] = True
         app.config['DEBUG'] = True
 
@@ -39,17 +39,17 @@ class ServerStatusTestCase(LiveServerTestCase):
 
 class UserTestCase(BaseTestCase):
     def login(self, userid, userpw):
-        url = USER_URL_PREFIX + USER_LOGIN_URL
+        url = USER_URL_PREFIX + USER_SESSION_URL
         return self.client.post(url,
                                 data=dict(userid=userid,
                                           userpw=userpw))
 
     def logout(self):
-        url = USER_URL_PREFIX + USER_LOGOUT_URL
-        return self.client.get(url)
+        url = USER_URL_PREFIX + USER_SESSION_URL
+        return self.client.delete(url)
 
     def register(self, userid, userpw, name, email, nickname):
-        url = USER_URL_PREFIX + USER_REGISTER_URL
+        url = USER_URL_PREFIX + USER_MAIN_URL
 
         return self.client.post(url,
                                 data=dict(userid=userid,
@@ -58,11 +58,19 @@ class UserTestCase(BaseTestCase):
                                           email=email,
                                           nickname=nickname))
 
-    def delete(self, userid, userpw):
-        url = USER_URL_PREFIX + USER_REGISTER_URL
+    def current_user(self):
+        url = USER_URL_PREFIX + USER_SESSION_URL
+        return self.client.get(url)
+
+    def user_info(self, userid):
+        url = USER_URL_PREFIX + USER_MAIN_URL
+        return self.client.get(url,
+                               data=dict(userid=userid))
+
+    def delete(self, userpw):
+        url = USER_URL_PREFIX + USER_MAIN_URL
         return self.client.delete(url,
-                                  data=dict(userid=userid,
-                                            userpw=userpw))
+                                  data=dict(userpw=userpw))
 
     def test_userapi(self):
         userid = TEST_USERID
@@ -72,10 +80,10 @@ class UserTestCase(BaseTestCase):
         nickname = TEST_USER_NICKNAME
 
         # Need Login
-        self.assert401(self.delete('asdf', 'asdf'))
+        self.assert401(self.delete('asdf'))
         self.assert401(self.logout())
 
-        self.assert401(self.login(userid, userpw))
+        self.assert404(self.login(userid, userpw))
 
         self.assert200(self.register(userid, userpw, name, email, nickname))
         self.assert200(self.register(userid * 2, userpw * 2, name * 2, email * 2, nickname * 2))
@@ -84,17 +92,21 @@ class UserTestCase(BaseTestCase):
 
         self.assert200(self.login(userid, userpw))
 
+        self.assert200(self.current_user())
+
         # Need Logout
         self.assert401(self.login(userid, userpw))
         self.assert401(self.register(userid, userpw, name, email, nickname))
 
-        self.assert400(self.delete('asdf', 'asdf'))
+        self.assert401(self.delete('asdf'))
 
-        self.assert401(self.delete(userid * 2, userpw * 2))
+        self.assert401(self.delete(userpw * 2))
 
-        self.assert200(self.delete(userid, userpw))
+        self.assert200(self.user_info(userid))
 
-        self.assert200(self.logout())
+        self.assert200(self.delete(userpw))
+
+        self.assert404(self.user_info('asdfgsdf'))
 
 
 class ModelingTestCase(BaseTestCase):
