@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 from datetime import datetime
+from flask import jsonify
 
 from app import db
 
@@ -36,3 +37,12 @@ class User(db.Model):
 
     def __repr__(self):
         return "<User %s>" % self.userid
+
+    @property
+    def base_info_dict(self):
+        return jsonify(dict(userid=self.userid,
+                            name=self.name,
+                            email=self.email,
+                            nickname=self.nickname,
+                            created=self.created,
+                            updated=self.updated))
