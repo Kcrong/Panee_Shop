@@ -13,7 +13,8 @@ class BaseTestCase(TestCase):
         app.config['SECRET_KEY'] = 'development-test-key'
         app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:'
         app.config['TESTING'] = True
-        app.config['DEBUG'] = False
+        app.config['DEBUG'] = True
+        app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
         return app
 
@@ -110,11 +111,16 @@ class UserTestCase(BaseTestCase):
 
 
 class ModelingTestCase(BaseTestCase):
-    @staticmethod
-    def test_user_model():
-        u = User(TEST_USERNAME, TEST_USERPW, TEST_USERNAME, TEST_USER_EMAIL, TEST_USER_NICKNAME)
-        db.session.add(u)
-        db.session.commit()
+    def get_or_create_user(self):
+        return get_or_create(db.session, User,
+                             userid=TEST_USERID,
+                             userpw=TEST_USERPW,
+                             name=TEST_USERNAME,
+                             email=TEST_USER_EMAIL,
+                             nickname=TEST_USER_NICKNAME)
+
+    def test_user_model(self):
+        u = self.get_or_create_user()
 
         assert u in db.session
 
@@ -122,6 +128,16 @@ class ModelingTestCase(BaseTestCase):
         db.session.commit()
 
         assert u not in db.session
+
+    def test_shop_model(self):
+        u = self.get_or_create_user()
+
+        s = Shop(TEST_SHOPNAME)
+        u.shop.append(s)
+
+        db.session.commit()
+
+        assert s in db.session and s in u.shop
 
 
 if __name__ == '__main__':
