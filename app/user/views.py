@@ -2,21 +2,20 @@
 # -*- coding:utf-8 -*-
 
 from flask import request
-from flask_restful import Resource
 from sqlalchemy.exc import IntegrityError
 
+from app import RestBase
 from app.models import User, db
-from app.static_string import USER_MAIN_URL, USER_SESSION_URL
+from app.static_string import USER_MAIN_URL, USER_SESSION_URL, USER_IMAGE_URL
 from app.static_string import json_message
 from . import user_api
 from .login_manager import login_required, current_user, logout_required, login_user, logout_user
 
 
 @user_api.resource(USER_MAIN_URL)
-class Main(Resource):
+class Main(RestBase):
     def __init__(self):
         self.parser = user_parser[USER_MAIN_URL][request.method]
-        self.args = self.parser.parse_args()
 
     def get(self):
         args = self.args
@@ -60,10 +59,9 @@ class Main(Resource):
 
 
 @user_api.resource(USER_SESSION_URL)
-class Session(Resource):
+class Session(RestBase):
     def __init__(self):
         self.parser = user_parser[USER_SESSION_URL][request.method]
-        self.args = self.parser.parse_args()
 
     @login_required
     def get(self):
@@ -81,6 +79,16 @@ class Session(Resource):
     def delete(self):
         logout_user()
         return json_message()
+
+
+@user_api.resource(USER_IMAGE_URL)
+class Images(RestBase):
+    def __init__(self):
+        self.parser = user_parser[USER_IMAGE_URL][request.method]
+
+    @login_required
+    def get(self):
+        args = self.args
 
 
 from .arg_manager import user_parser
