@@ -22,6 +22,14 @@ parser.add_argument('name', type=str, help='Need String name', required=True)
 parser.add_argument('email', type=str, help='Need String email', required=True)
 parser.add_argument('nickname', type=str, help='Need String nickname', required=True)
 
+# USER_MAIN - PUT: 사용자 정보 변경
+parser = apis_parser[APIS_ACCOUNT_URL]['PUT']
+parser.add_argument('userid', type=str, help='Need String Userid to change', required=True)
+parser.add_argument('userpw', type=str, help='Need String Userpw to change', required=True)
+parser.add_argument('name', type=str, help='Need String name to change', required=True)
+parser.add_argument('email', type=str, help='Need String email to change', required=True)
+parser.add_argument('nickname', type=str, help='Need String nickname to change', required=True)
+
 # USER_MAIN - GETS: 회원들 정보??
 " Can't understand"
 
