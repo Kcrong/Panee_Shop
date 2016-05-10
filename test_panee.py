@@ -75,13 +75,13 @@ class UserTestCase(BaseTestCase):
                                   data=dict(userpw=userpw))
 
     def upload_image(self):
-        url = APIS_URL_PREFIX + APIS_IMAGE_URL
+        url = APIS_URL_PREFIX + APIS_FILES_URL
         return self.client.post(url,
                                 data=dict(file=(BytesIO(TEST_FILEDATA), TEST_FILENAME)),
                                 content_type='multipart/form-data')
 
     def delete_image(self, filename):
-        url = APIS_URL_PREFIX + APIS_IMAGE_URL
+        url = APIS_URL_PREFIX + APIS_FILES_URL
         return self.client.delete(url,
                                   data=dict(filename=filename))
 

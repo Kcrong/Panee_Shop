@@ -6,7 +6,7 @@ from sqlalchemy.exc import IntegrityError
 
 from app import RestBase
 from app.models import *
-from app.static_string import APIS_ACCOUNT_URL, APIS_SESSION_URL, APIS_ACCOUNT_GETS_URL, APIS_IMAGE_URL
+from app.static_string import APIS_ACCOUNT_URL, APIS_SESSION_URL, APIS_ACCOUNT_GETS_URL, APIS_FILES_URL
 from app.static_string import json_message
 from . import main_api
 from .login_manager import login_required, current_user, logout_required, login_user, logout_user
@@ -81,10 +81,10 @@ class Session(RestBase):
         return json_message()
 
 
-@main_api.resource(APIS_IMAGE_URL)
-class Image(RestBase):
+@main_api.resource(APIS_FILES_URL)
+class File(RestBase):
     def __init__(self):
-        self.parser = apis_parser[APIS_IMAGE_URL][request.method]
+        self.parser = apis_parser[APIS_FILES_URL][request.method]
 
     def post(self):
         file = self.args['file']

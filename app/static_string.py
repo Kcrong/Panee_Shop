@@ -13,7 +13,7 @@ APIS_URL_PREFIX = '/apis'
 APIS_ACCOUNT_URL = '/account'
 APIS_SESSION_URL = '/session'
 APIS_ACCOUNT_GETS_URL = '/accounts'
-APIS_IMAGE_URL = '/image'
+APIS_FILES_URL = '/image'
 
 # SHOP URL
 SHOP_NAME = 'shop'
@@ -42,12 +42,11 @@ TEST_FILEDATA = b'this is test file~!~!~!~!'
 
 
 def json_message(message="Success", code=200, **kwargs):
-    response_data = {'message': message,
-                     'status': code}
 
-    response_data.update(kwargs)
+    kwargs.update({'message': message,
+                   'status': code})
 
-    response = jsonify(response_data)
+    response = jsonify(kwargs)
 
     response.status_code = code
     return response

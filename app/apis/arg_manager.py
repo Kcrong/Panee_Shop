@@ -41,9 +41,9 @@ parser.add_argument('userpw', type=str, help='Need String Userpw', required=True
 "NO required args"
 
 # USER_IMAGE - POST: 파일 추가
-parser = apis_parser[APIS_IMAGE_URL]['POST']
+parser = apis_parser[APIS_FILES_URL]['POST']
 parser.add_argument('file', type=FileStorage, location='files', help='Need file to upload', required=True)
 
 # USER_IMAGE - DELETE: 파일 삭제
-parser = apis_parser[APIS_IMAGE_URL]['DELETE']
+parser = apis_parser[APIS_FILES_URL]['DELETE']
 parser.add_argument('filename', type=str, help='Need filename to delete (After randomize)', required=True)
