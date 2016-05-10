@@ -11,7 +11,7 @@ user_parser = {
 
 # USER_MAIN - GET : 현재 사용자 정보
 parser = user_parser[USER_MAIN_URL]['GET']
-parser.add_argument('userid', type=str, help='Need String Userid', required=True)
+parser.add_argument('userid', type=int, help='Need User ID number', required=True)
 
 # USER_MAIN - POST: 사용자 등록 (회원가입)
 parser = user_parser[USER_MAIN_URL]['POST']
