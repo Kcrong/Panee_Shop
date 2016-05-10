@@ -10,7 +10,7 @@ UPLOAD_PATH = path.join(APP_PATH, 'uploads')
 # USER URL
 USER_NAME = 'user'
 USER_URL_PREFIX = '/user'
-USER_MAIN_URL = '/main'
+USER_MAIN_URL = '/account'
 USER_SESSION_URL = '/session'
 USER_IMAGE_URL = '/images'
 USER_UPLOAD_PATH = path.join(UPLOAD_PATH, 'user')
