@@ -52,6 +52,19 @@ class Main(RestBase):
         else:
             return json_message()
 
+    @login_required
+    def put(self):
+        args = self.args
+        u = User.query.filter_by(userid=args['userid'], active=True).first_or_404()
+        u.userpw = args['userpw']
+        u.name = args['name']
+        u.email = args['email']
+        u.nickname = args['nickname']
+
+        db.session.commit()
+
+        return json_message()
+
 
 @main_api.resource(APIS_SESSION_URL)
 class Session(RestBase):
