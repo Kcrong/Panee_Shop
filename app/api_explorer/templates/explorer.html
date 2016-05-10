@@ -90,7 +90,7 @@
                             {% for req_item in api_list[req_blueprint][1]['/'+req_api][req_method].args %}
                             <div class="form-group">
                                 <label>{{ req_item.name }}</label>
-                                <input placeholder="{{ req_item.type }}" name="{{ req_item.name }}" class="form-control">
+                                <input type="{{ req_item.type | totype }}" placeholder="{{ req_item.type | totype }}" name="{{ req_item.name }}" class="form-control">
                             </div>
                             {% endfor %}
 

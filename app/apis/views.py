@@ -20,7 +20,7 @@ class Main(RestBase):
     def get(self):
         args = self.args
         u = User.query.filter_by(id=args['userid'], active=True).first_or_404()
-        return u.base_info_dict
+        return jsonify(u.base_info_dict)
 
     @login_required
     def delete(self):
@@ -45,12 +45,7 @@ class Main(RestBase):
         except IntegrityError as e:
             db.session.rollback()
 
-            try:
-                dup = e.message.split('for key')[1].split("'")[1]
-            except AttributeError:
-                dup = e.args[0].split(':')[1].split('.')[1]
-
-            message = "%s is duplicate" % dup
+            message = "%s is duplicate" % e.args[0].split(':')[1].split('.')[1]
 
             return json_message(message, 400)
 
@@ -66,7 +61,7 @@ class Session(RestBase):
     @login_required
     def get(self):
         u = current_user()
-        return u.base_info_dict
+        return jsonify(u.base_info_dict)
 
     @logout_required
     def post(self):
