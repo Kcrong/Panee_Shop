@@ -38,7 +38,3 @@ parser.add_argument('userpw', type=str, help='Need String Userpw', required=True
 
 # USER_SESSION - DELETE: 로그아웃
 "NO required args"
-
-# USER_IMAGE - GET: 유저 이미지 가져오기
-parser = user_parser[USER_IMAGE_URL]['GET']
-parser.add_argument('userid', type=str, help='Need String Userid', required=True)
