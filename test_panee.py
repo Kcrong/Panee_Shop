@@ -109,13 +109,13 @@ class UserTestCase(BaseTestCase):
         self.assert200(self.current_user())
 
         # IMAGE UPLOAD TEST
-        # rep = self.upload_image()
-        # self.assert200(rep)
+        rep = self.upload_image()
+        self.assert200(rep)
 
-        # filename = rep.json['file']
+        filename = rep.json['file']
 
         # IMAGE DELETE TEST
-        # self.assert200(self.delete_image(filename))
+        self.assert200(self.delete_image(filename))
 
         # Need Logout
         self.assert401(self.login(userid, userpw))
