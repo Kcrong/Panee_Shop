@@ -7,13 +7,11 @@ from flask import jsonify
 APP_PATH = path.dirname(path.abspath(__file__))
 UPLOAD_PATH = path.join(APP_PATH, 'uploads')
 
-# USER URL
-USER_NAME = 'user'
-USER_URL_PREFIX = '/user'
-USER_MAIN_URL = '/account'
-USER_SESSION_URL = '/session'
-USER_UPLOAD_PATH = path.join(UPLOAD_PATH, 'user')
-USER_PROFILE_IMAGE_PATH = path.join(USER_UPLOAD_PATH, 'profile')
+# APIS URL
+APIS_NAME = 'apis'
+APIS_URL_PREFIX = '/apis'
+APIS_ACCOUNT_URL = '/account'
+APIS_SESSION_URL = '/session'
 
 # SHOP URL
 SHOP_NAME = 'shop'
@@ -37,8 +35,6 @@ TEST_USERPW = 'test'
 TEST_USERNAME = '이름'
 TEST_USER_EMAIL = 'email@email.com'
 TEST_USER_NICKNAME = 'testnick'
-
-TEST_SHOPNAME = '상품명'
 
 
 def json_message(message="Success", code=200):

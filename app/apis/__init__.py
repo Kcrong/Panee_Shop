@@ -5,9 +5,9 @@ from flask import Blueprint
 from flask_restful import Api
 from app.static_string import *
 
-user_api = Api()
-user_blueprint = Blueprint(USER_NAME, __name__)
+main_api = Api()
+apis_blueprint = Blueprint(APIS_NAME, __name__)
 
-user_api.init_app(user_blueprint)
+main_api.init_app(apis_blueprint)
 
 from .views import *

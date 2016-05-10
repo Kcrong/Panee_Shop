@@ -41,17 +41,17 @@ class ServerStatusTestCase(LiveServerTestCase):
 
 class UserTestCase(BaseTestCase):
     def login(self, userid, userpw):
-        url = USER_URL_PREFIX + USER_SESSION_URL
+        url = APIS_URL_PREFIX + APIS_SESSION_URL
         return self.client.post(url,
                                 data=dict(userid=userid,
                                           userpw=userpw))
 
     def logout(self):
-        url = USER_URL_PREFIX + USER_SESSION_URL
+        url = APIS_URL_PREFIX + APIS_SESSION_URL
         return self.client.delete(url)
 
     def register(self, userid, userpw, name, email, nickname):
-        url = USER_URL_PREFIX + USER_MAIN_URL
+        url = APIS_URL_PREFIX + APIS_ACCOUNT_URL
 
         return self.client.post(url,
                                 data=dict(userid=userid,
@@ -61,21 +61,21 @@ class UserTestCase(BaseTestCase):
                                           nickname=nickname))
 
     def current_user(self):
-        url = USER_URL_PREFIX + USER_SESSION_URL
+        url = APIS_URL_PREFIX + APIS_SESSION_URL
         return self.client.get(url)
 
     def user_info(self, useridnum):
-        url = USER_URL_PREFIX + USER_MAIN_URL
+        url = APIS_URL_PREFIX + APIS_ACCOUNT_URL
         return self.client.get(url,
                                data=dict(userid=useridnum))
 
     def delete(self, userpw):
-        url = USER_URL_PREFIX + USER_MAIN_URL
+        url = APIS_URL_PREFIX + APIS_ACCOUNT_URL
         return self.client.delete(url,
                                   data=dict(userpw=userpw))
 
     def upload_image(self):
-        url = USER_URL_PREFIX + USER_IMAGE_URL
+        url = APIS_URL_PREFIX # + USER_IMAGE_URL
         return self.client.post(url,
                                 data=dict(image=(BytesIO(b'hello World!'), 'test.txt')),
                                 content_type='multipart/form-data')
@@ -138,16 +138,6 @@ class ModelingTestCase(BaseTestCase):
         db.session.commit()
 
         assert u not in db.session
-
-    def test_shop_model(self):
-        u = self.get_or_create_user()
-
-        s = Shop(TEST_SHOPNAME)
-        u.shop.append(s)
-
-        db.session.commit()
-
-        assert s in db.session and s in u.shop
 
 
 if __name__ == '__main__':

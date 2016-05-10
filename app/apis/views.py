@@ -6,16 +6,16 @@ from sqlalchemy.exc import IntegrityError
 
 from app import RestBase
 from app.models import User, db
-from app.static_string import USER_MAIN_URL, USER_SESSION_URL
+from app.static_string import APIS_ACCOUNT_URL, APIS_SESSION_URL
 from app.static_string import json_message
-from . import user_api
+from . import main_api
 from .login_manager import login_required, current_user, logout_required, login_user, logout_user
 
 
-@user_api.resource(USER_MAIN_URL)
+@main_api.resource(APIS_ACCOUNT_URL)
 class Main(RestBase):
     def __init__(self):
-        self.parser = user_parser[USER_MAIN_URL][request.method]
+        self.parser = apis_parser[APIS_ACCOUNT_URL][request.method]
 
     def get(self):
         args = self.args
@@ -58,10 +58,10 @@ class Main(RestBase):
             return json_message()
 
 
-@user_api.resource(USER_SESSION_URL)
+@main_api.resource(APIS_SESSION_URL)
 class Session(RestBase):
     def __init__(self):
-        self.parser = user_parser[USER_SESSION_URL][request.method]
+        self.parser = apis_parser[APIS_SESSION_URL][request.method]
 
     @login_required
     def get(self):
@@ -81,4 +81,4 @@ class Session(RestBase):
         return json_message()
 
 
-from .arg_manager import user_parser
+from .arg_manager import apis_parser

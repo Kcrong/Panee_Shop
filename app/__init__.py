@@ -26,13 +26,11 @@ def setting_session():
 
 def create_app():
     from .main import main_blueprint
-    from .user import user_blueprint
-    from .shop import shop_blueprint
+    from .apis import apis_blueprint
     from .api_explorer import explorer_blueprint
 
     app.register_blueprint(main_blueprint)
-    app.register_blueprint(user_blueprint, url_prefix=USER_URL_PREFIX)
-    app.register_blueprint(shop_blueprint, url_prefix=SHOP_URL_PREFIX)
+    app.register_blueprint(apis_blueprint, url_prefix=APIS_URL_PREFIX)
     app.register_blueprint(explorer_blueprint, url_prefix=EXPLORER_URL_PREFIX)
 
     app.config.from_pyfile('../config.py')
