@@ -2,10 +2,12 @@ import os
 import random
 import string
 
+PROJECT_PATH = os.path.dirname(os.path.abspath(__file__))
+
 try:
     DEBUG = os.environ['FLASK_DEBUG'] == 'true'
 except KeyError:
-    DEBUG = False
+    DEBUG = True
 
 
 def randomkey(length):
@@ -13,7 +15,7 @@ def randomkey(length):
 
 
 if DEBUG:
-    SQLALCHEMY_DATABASE_URI = 'sqlite:////tmp/testdb.db'
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(PROJECT_PATH, 'testdb.db')
     SECRET_KEY = 'development-key'
 else:
     SQLALCHEMY_DATABASE_URI = 'mysql://panee:panee123@localhost:3306/panee?charset=utf8'
