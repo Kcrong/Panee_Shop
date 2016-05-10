@@ -114,6 +114,9 @@ class UserTestCase(BaseTestCase):
 
         filename = rep.json['file']
 
+        # WRONG IMAGE DELETE TEST
+        self.assert404(self.delete_image(filename * 2))
+
         # IMAGE DELETE TEST
         self.assert200(self.delete_image(filename))
 
