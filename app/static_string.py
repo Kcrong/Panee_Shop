@@ -13,7 +13,7 @@ APIS_URL_PREFIX = '/apis'
 APIS_ACCOUNT_URL = '/account'
 APIS_SESSION_URL = '/session'
 APIS_ACCOUNT_GETS_URL = '/accounts'
-APIS_FILES_URL = '/image'
+APIS_FILES_URL = '/file'
 
 # SHOP URL
 SHOP_NAME = 'shop'
