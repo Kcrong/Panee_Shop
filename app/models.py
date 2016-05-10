@@ -1,8 +1,11 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
+import os
+
 from datetime import datetime
 from flask import jsonify
-
+from app.static_string import UPLOAD_PATH
+from config import randomkey
 from app import db
 
 
@@ -15,6 +18,34 @@ def get_or_create(session, model, **kwargs):
         session.add(instance)
         session.commit()
         return instance
+
+
+class Files(db.Model):
+    id = db.Column(db.INTEGER, primary_key=True)
+    original = db.Column(db.String(200), nullable=False)
+    random = db.Column(db.String(200), nullable=False, unique=True)
+    type = db.Column(db.String(10))
+
+    def __init__(self, file):
+        self.original = file.filename
+        try:
+            self.type = self.original.split('.')[-1]
+        except IndexError:
+            self.type = None
+
+        self.random = randomkey(len(self.original)) + '.' + self.type
+
+        file.save(self.save_path)
+
+    def __del__(self):
+        try:
+            os.remove(self.save_path)
+        except FileNotFoundError:
+            pass
+
+    @property
+    def save_path(self):
+        return os.path.join(UPLOAD_PATH, self.random)
 
 
 class User(db.Model):

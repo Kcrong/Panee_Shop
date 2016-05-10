@@ -5,17 +5,17 @@ from flask import request
 from sqlalchemy.exc import IntegrityError
 
 from app import RestBase
-from app.models import User, db
-from app.static_string import USER_MAIN_URL, USER_SESSION_URL, USER_IMAGE_URL
+from app.models import *
+from app.static_string import APIS_ACCOUNT_URL, APIS_SESSION_URL, APIS_ACCOUNT_GETS_URL, APIS_FILES_URL
 from app.static_string import json_message
-from . import user_api
+from . import main_api
 from .login_manager import login_required, current_user, logout_required, login_user, logout_user
 
 
-@user_api.resource(USER_MAIN_URL)
+@main_api.resource(APIS_ACCOUNT_URL)
 class Main(RestBase):
     def __init__(self):
-        self.parser = user_parser[USER_MAIN_URL][request.method]
+        self.parser = apis_parser[APIS_ACCOUNT_URL][request.method]
 
     def get(self):
         args = self.args
@@ -58,10 +58,10 @@ class Main(RestBase):
             return json_message()
 
 
-@user_api.resource(USER_SESSION_URL)
+@main_api.resource(APIS_SESSION_URL)
 class Session(RestBase):
     def __init__(self):
-        self.parser = user_parser[USER_SESSION_URL][request.method]
+        self.parser = apis_parser[APIS_SESSION_URL][request.method]
 
     @login_required
     def get(self):
@@ -81,4 +81,37 @@ class Session(RestBase):
         return json_message()
 
 
-from .arg_manager import user_parser
+@main_api.resource(APIS_FILES_URL)
+class File(RestBase):
+    def __init__(self):
+        self.parser = apis_parser[APIS_FILES_URL][request.method]
+
+    def post(self):
+        file = self.args['file']
+
+        f = Files(file)
+
+        db.session.add(f)
+        db.session.commit()
+
+        return json_message(file=f.random)
+
+    def delete(self):
+        filename = self.args['filename']
+
+        f = Files.query.filter_by(random=filename).first_or_404()
+
+        db.session.delete(f)
+
+        db.session.commit()
+
+        return json_message()
+
+
+@main_api.resource(APIS_ACCOUNT_GETS_URL)
+class AccountGets(RestBase):
+    def __init__(self):
+        self.parser = apis_parser[APIS_ACCOUNT_GETS_URL][request.method]
+
+
+from .arg_manager import apis_parser

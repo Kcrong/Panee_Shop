@@ -7,14 +7,13 @@ from flask import jsonify
 APP_PATH = path.dirname(path.abspath(__file__))
 UPLOAD_PATH = path.join(APP_PATH, 'uploads')
 
-# USER URL
-USER_NAME = 'user'
-USER_URL_PREFIX = '/user'
-USER_MAIN_URL = '/account'
-USER_SESSION_URL = '/session'
-USER_IMAGE_URL = '/images'
-USER_UPLOAD_PATH = path.join(UPLOAD_PATH, 'user')
-USER_PROFILE_IMAGE_PATH = path.join(USER_UPLOAD_PATH, 'profile')
+# APIS URL
+APIS_NAME = 'apis'
+APIS_URL_PREFIX = '/apis'
+APIS_ACCOUNT_URL = '/account'
+APIS_SESSION_URL = '/session'
+APIS_ACCOUNT_GETS_URL = '/accounts'
+APIS_FILES_URL = '/image'
 
 # SHOP URL
 SHOP_NAME = 'shop'
@@ -38,12 +37,16 @@ TEST_USERPW = 'test'
 TEST_USERNAME = '이름'
 TEST_USER_EMAIL = 'email@email.com'
 TEST_USER_NICKNAME = 'testnick'
+TEST_FILENAME = 'test.txt'
+TEST_FILEDATA = b'this is test file~!~!~!~!'
 
-TEST_SHOPNAME = '상품명'
 
+def json_message(message="Success", code=200, **kwargs):
 
-def json_message(message="Success", code=200):
-    response = jsonify({'message': message,
-                        'status': code})
+    kwargs.update({'message': message,
+                   'status': code})
+
+    response = jsonify(kwargs)
+
     response.status_code = code
     return response

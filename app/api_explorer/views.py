@@ -7,13 +7,11 @@ from . import explorer_blueprint
 from app.static_string import EXPLORER_STATIC_PATH, EXPLORER_INDEX_URL, EXPLORER_URL_PREFIX
 
 # Import All blueprint
-from app.user import user_api, user_parser, user_blueprint
-from app.shop import shop_api, shop_parser, shop_blueprint
+from app.apis import main_api, apis_blueprint, apis_parser
 
 API_DICT = {
     # (api, parser, blueprint)
-    user_blueprint.name: (user_api, user_parser, user_blueprint),
-    shop_blueprint.name: (shop_api, shop_parser, shop_blueprint)
+    apis_blueprint.name: (main_api, apis_parser, apis_blueprint)
 }
 
 
@@ -33,11 +31,11 @@ def static_files(filename):
 
 @explorer_blueprint.route(EXPLORER_INDEX_URL + '/<string:blueprint>/<string:api>/<string:method>')
 def index(blueprint, api, method):
-    api_resource_index = [url[0] for api_class, url, _ in API_DICT[blueprint][0].resources].index('/'+api)
+    api_resource_index = [url[0] for api_class, url, _ in API_DICT[blueprint][0].resources].index('/' + api)
     method_list = API_DICT[blueprint][0].resources[api_resource_index][0].methods
 
     return render_template('explorer.html',
-                           base_url=EXPLORER_URL_PREFIX+EXPLORER_INDEX_URL,
+                           base_url=EXPLORER_URL_PREFIX + EXPLORER_INDEX_URL,
                            api_list=API_DICT,
                            req_blueprint=blueprint,
                            req_api=api,
