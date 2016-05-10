@@ -13,6 +13,7 @@ APIS_URL_PREFIX = '/apis'
 APIS_ACCOUNT_URL = '/account'
 APIS_SESSION_URL = '/session'
 APIS_ACCOUNT_GETS_URL = '/accounts'
+APIS_IMAGE_URL = '/image'
 
 # SHOP URL
 SHOP_NAME = 'shop'
@@ -36,10 +37,17 @@ TEST_USERPW = 'test'
 TEST_USERNAME = '이름'
 TEST_USER_EMAIL = 'email@email.com'
 TEST_USER_NICKNAME = 'testnick'
+TEST_FILENAME = 'test.txt'
+TEST_FILEDATA = b'this is test file~!~!~!~!'
 
 
-def json_message(message="Success", code=200):
-    response = jsonify({'message': message,
-                        'status': code})
+def json_message(message="Success", code=200, **kwargs):
+    response_data = {'message': message,
+                     'status': code}
+
+    response_data.update(kwargs)
+
+    response = jsonify(response_data)
+
     response.status_code = code
     return response

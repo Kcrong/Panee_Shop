@@ -5,8 +5,8 @@ from flask import request
 from sqlalchemy.exc import IntegrityError
 
 from app import RestBase
-from app.models import User, db
-from app.static_string import APIS_ACCOUNT_URL, APIS_SESSION_URL, APIS_ACCOUNT_GETS_URL
+from app.models import *
+from app.static_string import APIS_ACCOUNT_URL, APIS_SESSION_URL, APIS_ACCOUNT_GETS_URL, APIS_IMAGE_URL
 from app.static_string import json_message
 from . import main_api
 from .login_manager import login_required, current_user, logout_required, login_user, logout_user
@@ -78,6 +78,33 @@ class Session(RestBase):
     @login_required
     def delete(self):
         logout_user()
+        return json_message()
+
+
+@main_api.resource(APIS_IMAGE_URL)
+class Image(RestBase):
+    def __init__(self):
+        self.parser = apis_parser[APIS_IMAGE_URL][request.method]
+
+    def post(self):
+        file = self.args['file']
+
+        f = Files(file)
+
+        db.session.add(f)
+        db.session.commit()
+
+        return json_message(file=f.random)
+
+    def delete(self):
+        filename = self.args['filename']
+
+        f = Files.query.filter_by(random=filename).first_or_404()
+
+        db.session.delete(f)
+
+        db.session.commit()
+
         return json_message()
 
 

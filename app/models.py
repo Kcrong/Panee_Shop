@@ -23,15 +23,29 @@ def get_or_create(session, model, **kwargs):
 class Files(db.Model):
     id = db.Column(db.INTEGER, primary_key=True)
     original = db.Column(db.String(200), nullable=False)
-    random = db.Column(db.String(200), nullable=False)
+    random = db.Column(db.String(200), nullable=False, unique=True)
+    type = db.Column(db.String(10))
 
     def __init__(self, file):
         self.original = file.filename
-        self.random = randomkey(len(self.original))
+        try:
+            self.type = self.original.split('.')[-1]
+        except IndexError:
+            self.type = None
 
-        save_path = os.path.join(UPLOAD_PATH, self.random)
+        self.random = randomkey(len(self.original)) + '.' + self.type
 
-        file.save(save_path)
+        file.save(self.save_path)
+
+    def __del__(self):
+        try:
+            os.remove(self.save_path)
+        except FileNotFoundError:
+            pass
+
+    @property
+    def save_path(self):
+        return os.path.join(UPLOAD_PATH, self.random)
 
 
 class User(db.Model):

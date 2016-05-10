@@ -1,7 +1,8 @@
 from flask_restful import reqparse
+from werkzeug.datastructures import FileStorage
 
 import config
-from app.static_string import APIS_ACCOUNT_URL, APIS_SESSION_URL
+from app.static_string import *
 from .views import main_api
 
 apis_parser = {
@@ -38,3 +39,11 @@ parser.add_argument('userpw', type=str, help='Need String Userpw', required=True
 
 # USER_SESSION - DELETE: 로그아웃
 "NO required args"
+
+# USER_IMAGE - POST: 파일 추가
+parser = apis_parser[APIS_IMAGE_URL]['POST']
+parser.add_argument('file', type=FileStorage, location='files', help='Need file to upload', required=True)
+
+# USER_IMAGE - DELETE: 파일 삭제
+parser = apis_parser[APIS_IMAGE_URL]['DELETE']
+parser.add_argument('filename', type=str, help='Need filename to delete (After randomize)', required=True)

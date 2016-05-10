@@ -75,10 +75,15 @@ class UserTestCase(BaseTestCase):
                                   data=dict(userpw=userpw))
 
     def upload_image(self):
-        url = APIS_URL_PREFIX # + USER_IMAGE_URL
+        url = APIS_URL_PREFIX + APIS_IMAGE_URL
         return self.client.post(url,
-                                data=dict(image=(BytesIO(b'hello World!'), 'test.txt')),
+                                data=dict(file=(BytesIO(TEST_FILEDATA), TEST_FILENAME)),
                                 content_type='multipart/form-data')
+
+    def delete_image(self, filename):
+        url = APIS_URL_PREFIX + APIS_IMAGE_URL
+        return self.client.delete(url,
+                                  data=dict(filename=filename))
 
     def test_userapi(self):
         userid = TEST_USERID
@@ -103,7 +108,14 @@ class UserTestCase(BaseTestCase):
 
         self.assert200(self.current_user())
 
-        self.upload_image()
+        # IMAGE UPLOAD TEST
+        rep = self.upload_image()
+        self.assert200(rep)
+
+        filename = rep.json['file']
+
+        # IMAGE DELETE TEST
+        self.assert200(self.delete_image(filename))
 
         # Need Logout
         self.assert401(self.login(userid, userpw))
