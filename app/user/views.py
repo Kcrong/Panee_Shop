@@ -19,7 +19,7 @@ class Main(RestBase):
 
     def get(self):
         args = self.args
-        u = User.query.filter_by(userid=args['userid'], active=True).first_or_404()
+        u = User.query.filter_by(id=args['userid'], active=True).first_or_404()
         return u.base_info_dict
 
     @login_required
@@ -79,16 +79,6 @@ class Session(RestBase):
     def delete(self):
         logout_user()
         return json_message()
-
-
-@user_api.resource(USER_IMAGE_URL)
-class Images(RestBase):
-    def __init__(self):
-        self.parser = user_parser[USER_IMAGE_URL][request.method]
-
-    @login_required
-    def get(self):
-        args = self.args
 
 
 from .arg_manager import user_parser
