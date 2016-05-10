@@ -4,6 +4,7 @@ from flask.ext.testing import TestCase, LiveServerTestCase
 from app.models import *
 from manage import app
 from urllib import request
+from io import BytesIO
 
 from app.static_string import *
 
@@ -63,15 +64,21 @@ class UserTestCase(BaseTestCase):
         url = USER_URL_PREFIX + USER_SESSION_URL
         return self.client.get(url)
 
-    def user_info(self, userid):
+    def user_info(self, useridnum):
         url = USER_URL_PREFIX + USER_MAIN_URL
         return self.client.get(url,
-                               data=dict(userid=userid))
+                               data=dict(userid=useridnum))
 
     def delete(self, userpw):
         url = USER_URL_PREFIX + USER_MAIN_URL
         return self.client.delete(url,
                                   data=dict(userpw=userpw))
+
+    def upload_image(self):
+        url = USER_URL_PREFIX + USER_IMAGE_URL
+        return self.client.post(url,
+                                data=dict(image=(BytesIO(b'hello World!'), 'test.txt')),
+                                content_type='multipart/form-data')
 
     def test_userapi(self):
         userid = TEST_USERID
@@ -79,6 +86,7 @@ class UserTestCase(BaseTestCase):
         name = TEST_USERNAME
         email = TEST_USER_EMAIL
         nickname = TEST_USER_NICKNAME
+        useridnum = 1
 
         # Need Login
         self.assert401(self.delete('asdf'))
@@ -95,6 +103,8 @@ class UserTestCase(BaseTestCase):
 
         self.assert200(self.current_user())
 
+        self.upload_image()
+
         # Need Logout
         self.assert401(self.login(userid, userpw))
         self.assert401(self.register(userid, userpw, name, email, nickname))
@@ -103,11 +113,11 @@ class UserTestCase(BaseTestCase):
 
         self.assert401(self.delete(userpw * 2))
 
-        self.assert200(self.user_info(userid))
+        self.assert200(self.user_info(useridnum))
 
         self.assert200(self.delete(userpw))
 
-        self.assert404(self.user_info('asdfgsdf'))
+        self.assert404(self.user_info(3))
 
 
 class ModelingTestCase(BaseTestCase):

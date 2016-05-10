@@ -4,6 +4,7 @@ from flask import Flask, session
 from flask.ext.script import Manager
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.migrate import Migrate, MigrateCommand
+from flask_restful import Resource
 
 try:
     import MySQLdb
@@ -49,3 +50,9 @@ db.init_app(app)
 from .models import *
 
 migrate = Migrate(app, db)
+
+
+class RestBase(Resource):
+    @property
+    def args(self):
+        return self.parser.parse_args()
