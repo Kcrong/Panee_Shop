@@ -5,6 +5,7 @@ from flask.ext.script import Manager
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.migrate import Migrate, MigrateCommand
 from flask_restful import Resource
+from werkzeug.datastructures import FileStorage
 
 try:
     import MySQLdb
@@ -54,3 +55,15 @@ class RestBase(Resource):
     @property
     def args(self):
         return self.parser.parse_args()
+
+
+type_dict = {
+    FileStorage: 'file',
+    str: 'text',
+    int: 'number'
+}
+
+
+@app.template_filter('totype')
+def class2input(class_obj):
+    return type_dict[class_obj]
