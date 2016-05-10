@@ -85,7 +85,7 @@ class UserTestCase(BaseTestCase):
         return self.client.delete(url,
                                   data=dict(filename=filename))
 
-    def test_userapi(self):
+    def test_api(self):
         userid = TEST_USERID
         userpw = TEST_USERPW
         name = TEST_USERNAME
