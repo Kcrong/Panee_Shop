@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 
-from flask import request
+from flask import request, jsonify
 from sqlalchemy.exc import IntegrityError
 
 from app import RestBase
@@ -114,12 +114,6 @@ class File(RestBase):
         db.session.commit()
 
         return json_message()
-
-
-@main_api.resource(APIS_ACCOUNT_GETS_URL)
-class AccountGets(RestBase):
-    def __init__(self):
-        self.parser = apis_parser[APIS_ACCOUNT_GETS_URL][request.method]
 
 
 from .arg_manager import apis_parser
