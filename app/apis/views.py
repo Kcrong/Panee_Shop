@@ -45,12 +45,7 @@ class Main(RestBase):
         except IntegrityError as e:
             db.session.rollback()
 
-            try:
-                dup = e.message.split('for key')[1].split("'")[1]
-            except AttributeError:
-                dup = e.args[0].split(':')[1].split('.')[1]
-
-            message = "%s is duplicate" % dup
+            message = "%s is duplicate" % e.args[0].split(':')[1].split('.')[1]
 
             return json_message(message, 400)
 
