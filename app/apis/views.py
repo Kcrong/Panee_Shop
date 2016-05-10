@@ -66,7 +66,7 @@ class Session(RestBase):
     @login_required
     def get(self):
         u = current_user()
-        return u.base_info_dict
+        return jsonify(u.base_info_dict)
 
     @logout_required
     def post(self):
