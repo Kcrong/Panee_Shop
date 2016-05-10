@@ -72,12 +72,12 @@ class User(db.Model):
 
     @property
     def base_info_dict(self):
-        return jsonify(dict(userid=self.userid,
-                            name=self.name,
-                            email=self.email,
-                            nickname=self.nickname,
-                            created=self.created,
-                            updated=self.updated))
+        return dict(userid=self.userid,
+                    name=self.name,
+                    email=self.email,
+                    nickname=self.nickname,
+                    created=self.created,
+                    updated=self.updated)
 
 
 class Shop(db.Model):

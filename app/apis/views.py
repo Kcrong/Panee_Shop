@@ -20,7 +20,7 @@ class Main(RestBase):
     def get(self):
         args = self.args
         u = User.query.filter_by(id=args['userid'], active=True).first_or_404()
-        return u.base_info_dict
+        return jsonify(u.base_info_dict)
 
     @login_required
     def delete(self):
