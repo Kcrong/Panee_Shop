@@ -7,7 +7,7 @@ PROJECT_PATH = os.path.dirname(os.path.abspath(__file__))
 try:
     DEBUG = os.environ['FLASK_DEBUG'] == 'true'
 except KeyError:
-    DEBUG = True
+    DEBUG = False
 
 
 def randomkey(length):
