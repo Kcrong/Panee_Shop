@@ -12,6 +12,7 @@ APIS_NAME = 'apis'
 APIS_URL_PREFIX = '/apis'
 APIS_ACCOUNT_URL = '/account'
 APIS_SESSION_URL = '/session'
+APIS_ACCOUNT_GETS_URL = '/accounts'
 
 # SHOP URL
 SHOP_NAME = 'shop'
