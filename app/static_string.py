@@ -3,6 +3,7 @@ import os
 path = os.path
 
 from flask import jsonify
+from config import PROJECT_PATH
 
 APP_PATH = path.dirname(path.abspath(__file__))
 UPLOAD_PATH = path.join(APP_PATH, 'uploads')
@@ -39,6 +40,8 @@ TEST_USER_EMAIL = 'email@email.com'
 TEST_USER_NICKNAME = 'testnick'
 TEST_FILENAME = 'test.txt'
 TEST_FILEDATA = b'this is test file~!~!~!~!'
+TEST_IMAGENAME = 'test'
+TEST_IMAGE = os.path.join(PROJECT_PATH, 'tests', 'image.png')
 
 
 def json_message(message="Success", code=200, **kwargs):

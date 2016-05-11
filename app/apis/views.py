@@ -6,7 +6,7 @@ from sqlalchemy.exc import IntegrityError
 
 from app import RestBase
 from app.models import *
-from app.static_string import APIS_ACCOUNT_URL, APIS_SESSION_URL, APIS_ACCOUNT_GETS_URL, APIS_FILES_URL
+from app.static_string import APIS_ACCOUNT_URL, APIS_SESSION_URL, APIS_FILES_URL
 from app.static_string import json_message
 from . import main_api
 from .login_manager import login_required, current_user, logout_required, login_user, logout_user

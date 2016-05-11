@@ -86,7 +86,7 @@
                 <div class="row">
                     <div class="col-lg-6">
 
-                        <form id="api_form" role="form" action="/{{ req_blueprint }}/{{ req_api }}" method="{{ req_method }}">
+                        <form id="api_form" role="form" action="/{{ req_blueprint }}/{{ req_api }}" method="{{ req_method }}" enctype="multipart/form-data">
                             {% for req_item in api_list[req_blueprint][1]['/'+req_api][req_method].args %}
                             <div class="form-group">
                                 <label>{{ req_item.name }}</label>
