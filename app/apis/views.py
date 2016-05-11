@@ -96,8 +96,7 @@ class File(RestBase):
 
     def post(self):
         file = self.args['file']
-        # HERE IS BUG!!!!!
-        # TODO: FIX BUG
+
         f = Files(file)
 
         db.session.add(f)
