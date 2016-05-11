@@ -47,6 +47,11 @@ TEST_FILENAME = 'test.txt'
 TEST_FILEDATA = b'this is test file~!~!~!~!'
 TEST_IMAGENAME = 'test.png'
 TEST_IMAGE = os.path.join(PROJECT_PATH, 'tests', 'image.png')
+TEST_SHOPNAME = 'testshop'
+TEST_COMMENT = 'this comment~~~~~~'
+TEST_FIRST_SCORE = 6
+TEST_SECOND_SCORE = 12
+TEST_SCORE_AVERAGE = (TEST_FIRST_SCORE + TEST_SECOND_SCORE) / 2
 
 
 def json_message(message="Success", code=200, **kwargs):

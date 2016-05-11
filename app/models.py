@@ -111,7 +111,7 @@ class User(db.Model):
     active = db.Column(db.Boolean, default=True, nullable=False)
     created = db.Column(db.DATETIME, default=datetime.now(), nullable=False)
     updated = db.Column(db.DATETIME, default=datetime.now(), nullable=False, onupdate=datetime.now())
-    shop = db.relationship('Shop')
+    shop = db.relationship('Shop', backref='writer')
 
     def __init__(self, userid, userpw, name, email, nickname):
         self.userid = userid
@@ -133,10 +133,48 @@ class User(db.Model):
                     updated=self.updated)
 
 
+class Comment(db.Model):
+    id = db.Column(db.INTEGER, primary_key=True)
+    writer = db.relationship(User, uselist=False, backref='comment')
+    writer_id = db.Column(db.INTEGER, db.ForeignKey(User.id))
+    shop_id = db.Column(db.INTEGER, db.ForeignKey('shop.id'))
+    content = db.Column(db.String(300), nullable=False)
+
+    def __init__(self, content, writer, shop):
+        self.content = content
+        self.writer = writer
+        self.shop = shop
+
+
+# 상품 평점
+class ShopScore(db.Model):
+    id = db.Column(db.INTEGER, primary_key=True)
+    writer = db.relationship(User, backref='score', uselist=False)
+    writer_id = db.Column(db.INTEGER, db.ForeignKey('user.id'))
+    score = db.Column(db.INTEGER, nullable=False)
+    shop = db.relationship('Shop', backref='all_score', uselist=False)
+    shop_id = db.Column(db.INTEGER, db.ForeignKey('shop.id'))
+    
+    def __init__(self, score, writer, shop):
+        self.score = score
+        self.writer = writer
+        self.shop = shop
+
+    def __add__(self, other):
+        return self.score + other.score
+        
+
 class Shop(db.Model):
     id = db.Column(db.INTEGER, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
-    writer = db.Column(db.INTEGER, db.ForeignKey('user.id'))
+    writer_id = db.Column(db.INTEGER, db.ForeignKey('user.id'))
+    comment = db.relationship(Comment, backref='shop')
 
-    def __init__(self, title):
+    def __init__(self, title, writer):
         self.title = title
+        self.writer = writer
+        
+    @property
+    def score(self):
+        all_score_obj = self.all_score
+        return sum(score_obj.score for score_obj in all_score_obj) / len(all_score_obj)

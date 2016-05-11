@@ -27,18 +27,6 @@ class BaseTestCase(TestCase):
         db.drop_all()
 
 
-class ServerStatusTestCase(LiveServerTestCase):
-    def create_app(self):
-        app.config['TESTING'] = True
-        app.config['LIVESERVER_PORT'] = 5000
-
-        return app
-
-    def test_server_is_up_and_running(self):
-        response = request.urlopen(self.get_server_url())
-        self.assertEqual(response.code, 200)
-
-
 class UserTestCase(BaseTestCase):
     def login(self, userid, userpw):
         url = APIS_URL_PREFIX + APIS_SESSION_URL
@@ -158,7 +146,8 @@ class UserTestCase(BaseTestCase):
 
 
 class ModelingTestCase(BaseTestCase):
-    def get_or_create_user(self):
+    @staticmethod
+    def get_or_create_user():
         return get_or_create(db.session, User,
                              userid=TEST_USERID,
                              userpw=TEST_USERPW,
@@ -166,15 +155,60 @@ class ModelingTestCase(BaseTestCase):
                              email=TEST_USER_EMAIL,
                              nickname=TEST_USER_NICKNAME)
 
-    def test_user_model(self):
-        u = self.get_or_create_user()
+    @staticmethod
+    def get_or_create_shop(u):
+        return get_or_create(db.session, Shop,
+                             title=TEST_SHOPNAME,
+                             writer=u)
 
+    @staticmethod
+    def get_or_create_comment(u, s):
+        return get_or_create(db.session, Comment,
+                             content=TEST_COMMENT,
+                             writer=u,
+                             shop=s)
+
+    @staticmethod
+    def get_or_create_score(u, s, score):
+        return get_or_create(db.session, ShopScore,
+                             score=score,
+                             writer=u,
+                             shop=s)
+
+    @staticmethod
+    def test_model():
+        u = ModelingTestCase.get_or_create_user()
+        s = ModelingTestCase.get_or_create_shop(u)
+        c = ModelingTestCase.get_or_create_comment(u, s)
+        sc1 = ModelingTestCase.get_or_create_score(u, s, TEST_FIRST_SCORE)
+        sc2 = ModelingTestCase.get_or_create_score(u, s, TEST_SECOND_SCORE)
+
+        # Check Add data
         assert u in db.session
+        assert s in db.session
+        assert c in db.session
+        assert sc1 in db.session
+        assert sc2 in db.session
 
-        db.session.delete(u)
-        db.session.commit()
+        # Check Inside data
+        u = User.query.first()
+        s = Shop.query.first()
+        c = Comment.query.first()
 
-        assert u not in db.session
+        # User Check
+        assert s in u.shop
+        assert c in u.comment
+
+        # Shop Check
+        assert s.writer is u
+        assert c in s.comment
+        assert sc1 in s.all_score
+        assert sc2 in s.all_score
+        assert s.score == TEST_SCORE_AVERAGE
+
+        # Comment Check
+        assert c.writer is u
+        assert c.shop is s
 
 
 if __name__ == '__main__':
