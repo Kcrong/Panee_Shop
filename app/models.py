@@ -154,7 +154,7 @@ class ShopScore(db.Model):
     score = db.Column(db.INTEGER, nullable=False)
     shop = db.relationship('Shop', backref='all_score', uselist=False)
     shop_id = db.Column(db.INTEGER, db.ForeignKey('shop.id'))
-    
+
     def __init__(self, score, writer, shop):
         self.score = score
         self.writer = writer
@@ -162,19 +162,30 @@ class ShopScore(db.Model):
 
     def __add__(self, other):
         return self.score + other.score
-        
+
 
 class Shop(db.Model):
     id = db.Column(db.INTEGER, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
     writer_id = db.Column(db.INTEGER, db.ForeignKey('user.id'))
     comment = db.relationship(Comment, backref='shop')
+    tag = db.relationship('Tag', backref='shop')
 
     def __init__(self, title, writer):
         self.title = title
         self.writer = writer
-        
+
     @property
     def score(self):
         all_score_obj = self.all_score
         return sum(score_obj.score for score_obj in all_score_obj) / len(all_score_obj)
+
+
+class Tag(db.Model):
+    id = db.Column(db.INTEGER, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    shop_id = db.Column(db.INTEGER, db.ForeignKey('shop.id'))
+
+    def __init__(self, name, shop):
+        self.name = name
+        shop.tag.append(self)

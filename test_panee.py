@@ -146,8 +146,12 @@ class UserTestCase(BaseTestCase):
 
 
 class ModelingTestCase(BaseTestCase):
+    """
+    g_o_c means get_or_create
+    """
+
     @staticmethod
-    def get_or_create_user():
+    def g_o_c_user():
         return get_or_create(db.session, User,
                              userid=TEST_USERID,
                              userpw=TEST_USERPW,
@@ -156,32 +160,39 @@ class ModelingTestCase(BaseTestCase):
                              nickname=TEST_USER_NICKNAME)
 
     @staticmethod
-    def get_or_create_shop(u):
+    def g_o_c_shop(u):
         return get_or_create(db.session, Shop,
                              title=TEST_SHOPNAME,
                              writer=u)
 
     @staticmethod
-    def get_or_create_comment(u, s):
+    def g_o_c_comment(u, s):
         return get_or_create(db.session, Comment,
                              content=TEST_COMMENT,
                              writer=u,
                              shop=s)
 
     @staticmethod
-    def get_or_create_score(u, s, score):
+    def g_o_c_score(u, s, score):
         return get_or_create(db.session, ShopScore,
                              score=score,
                              writer=u,
                              shop=s)
 
     @staticmethod
+    def g_o_c_tag(s, name):
+        return get_or_create(db.session, Tag,
+                             name=name,
+                             shop=s)
+
+    @staticmethod
     def test_model():
-        u = ModelingTestCase.get_or_create_user()
-        s = ModelingTestCase.get_or_create_shop(u)
-        c = ModelingTestCase.get_or_create_comment(u, s)
-        sc1 = ModelingTestCase.get_or_create_score(u, s, TEST_FIRST_SCORE)
-        sc2 = ModelingTestCase.get_or_create_score(u, s, TEST_SECOND_SCORE)
+        u = ModelingTestCase.g_o_c_user()
+        s = ModelingTestCase.g_o_c_shop(u)
+        c = ModelingTestCase.g_o_c_comment(u, s)
+        sc1 = ModelingTestCase.g_o_c_score(u, s, TEST_FIRST_SCORE)
+        sc2 = ModelingTestCase.g_o_c_score(u, s, TEST_SECOND_SCORE)
+        t = ModelingTestCase.g_o_c_tag(s, TEST_TAG_NAME)
 
         # Check Add data
         assert u in db.session
@@ -189,6 +200,7 @@ class ModelingTestCase(BaseTestCase):
         assert c in db.session
         assert sc1 in db.session
         assert sc2 in db.session
+        assert t in db.session
 
         # Check Inside data
         u = User.query.first()
@@ -205,10 +217,14 @@ class ModelingTestCase(BaseTestCase):
         assert sc1 in s.all_score
         assert sc2 in s.all_score
         assert s.score == TEST_SCORE_AVERAGE
+        assert t in s.tag
 
         # Comment Check
         assert c.writer is u
         assert c.shop is s
+
+        # Tag Check
+        assert t.shop is s
 
 
 if __name__ == '__main__':
