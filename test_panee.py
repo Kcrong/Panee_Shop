@@ -85,6 +85,11 @@ class UserTestCase(BaseTestCase):
         return self.client.delete(url,
                                   data=dict(filename=filename))
 
+    def delete_image(self, filename):
+        url = APIS_URL_PREFIX + APIS_FILES_URL
+        return self.client.delete(url,
+                                  data=dict(filename=filename))
+
     def upload_image(self):
         url = APIS_URL_PREFIX + APIS_FILES_URL
 
@@ -131,7 +136,11 @@ class UserTestCase(BaseTestCase):
         self.assert200(self.delete_file(filename))
 
         # Image Upload Test
-        self.assert200(self.upload_image())
+        rep = self.upload_image()
+        self.assert200(rep)
+
+        # Image Delete Test
+        self.assert200(self.delete_image(rep.json['file']))
 
         # Need Logout
         self.assert401(self.login(userid, userpw))
