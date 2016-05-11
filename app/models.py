@@ -1,12 +1,11 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 import os
-
 from datetime import datetime
-from flask import jsonify
+
+from app import db
 from app.static_string import UPLOAD_PATH
 from config import randomkey
-from app import db
 
 
 def get_or_create(session, model, **kwargs):

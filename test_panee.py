@@ -4,7 +4,7 @@ from flask.ext.testing import TestCase, LiveServerTestCase
 from app.models import *
 from manage import app
 from urllib import request
-from io import BytesIO
+from io import BytesIO, StringIO
 
 from app.static_string import *
 
@@ -74,16 +74,26 @@ class UserTestCase(BaseTestCase):
         return self.client.delete(url,
                                   data=dict(userpw=userpw))
 
-    def upload_image(self):
+    def upload_file(self):
         url = APIS_URL_PREFIX + APIS_FILES_URL
         return self.client.post(url,
                                 data=dict(file=(BytesIO(TEST_FILEDATA), TEST_FILENAME)),
                                 content_type='multipart/form-data')
 
-    def delete_image(self, filename):
+    def delete_file(self, filename):
         url = APIS_URL_PREFIX + APIS_FILES_URL
         return self.client.delete(url,
                                   data=dict(filename=filename))
+
+    def upload_image(self):
+        url = APIS_URL_PREFIX + APIS_FILES_URL
+
+        with open(TEST_IMAGE, 'rb') as fp:
+            test_imagedata = fp.read()
+
+        return self.client.post(url,
+                                data=dict(file=(BytesIO(test_imagedata), TEST_IMAGENAME)),
+                                content_type='multipart/form-data')
 
     def test_api(self):
         userid = TEST_USERID
@@ -108,17 +118,20 @@ class UserTestCase(BaseTestCase):
 
         self.assert200(self.current_user())
 
-        # IMAGE UPLOAD TEST
-        rep = self.upload_image()
+        # FILE UPLOAD TEST
+        rep = self.upload_file()
         self.assert200(rep)
 
         filename = rep.json['file']
 
-        # WRONG IMAGE DELETE TEST
-        self.assert404(self.delete_image(filename * 2))
+        # WRONG FILE DELETE TEST
+        self.assert404(self.delete_file(filename * 2))
 
-        # IMAGE DELETE TEST
-        self.assert200(self.delete_image(filename))
+        # FILE DELETE TEST
+        self.assert200(self.delete_file(filename))
+
+        # Image Upload Test
+        self.assert200(self.upload_image())
 
         # Need Logout
         self.assert401(self.login(userid, userpw))

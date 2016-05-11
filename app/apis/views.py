@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 
-from flask import request
+from flask import request, jsonify
 from sqlalchemy.exc import IntegrityError
 
 from app import RestBase
 from app.models import *
-from app.static_string import APIS_ACCOUNT_URL, APIS_SESSION_URL, APIS_ACCOUNT_GETS_URL, APIS_FILES_URL
+from app.static_string import APIS_ACCOUNT_URL, APIS_SESSION_URL, APIS_FILES_URL
 from app.static_string import json_message
 from . import main_api
 from .login_manager import login_required, current_user, logout_required, login_user, logout_user
@@ -114,12 +114,6 @@ class File(RestBase):
         db.session.commit()
 
         return json_message()
-
-
-@main_api.resource(APIS_ACCOUNT_GETS_URL)
-class AccountGets(RestBase):
-    def __init__(self):
-        self.parser = apis_parser[APIS_ACCOUNT_GETS_URL][request.method]
 
 
 from .arg_manager import apis_parser
