@@ -24,6 +24,7 @@ class Files(db.Model):
     original = db.Column(db.String(200), nullable=False)
     random = db.Column(db.String(200), nullable=False, unique=True)
     type = db.Column(db.String(10))
+    active = db.Column(db.Boolean, default=True, nullable=False)
 
     def __init__(self, file):
         self.original = file.filename
@@ -36,11 +37,13 @@ class Files(db.Model):
 
         file.save(self.save_path)
 
-    def __del__(self):
+    def delete(self):
         try:
             os.remove(self.save_path)
         except FileNotFoundError:
             pass
+
+        self.active = False
 
     @property
     def save_path(self):
