@@ -2,10 +2,19 @@
 # -*- coding:utf-8 -*-
 import os
 from datetime import datetime
+from contextlib import suppress
 
 from app import db
-from app.static_string import UPLOAD_PATH
+from app.static_string import (
+    UPLOAD_PATH,
+    SMALL_IMAGE_SIZE,
+    MEDIUM_IMAGE_SIZE,
+    SMALL_IMAGE_NAME_HEADER,
+    MEDIUM_IMAGE_NAME_HEADER
+)
 from config import randomkey
+
+from PIL import Image
 
 
 def get_or_create(session, model, **kwargs):
@@ -24,7 +33,8 @@ class Files(db.Model):
     original = db.Column(db.String(200), nullable=False)
     random = db.Column(db.String(200), nullable=False, unique=True)
     type = db.Column(db.String(10))
-    active = db.Column(db.Boolean, default=True, nullable=False)
+    is_image = db.Column(db.Boolean, nullable=False)
+    active = db.Column(db.Boolean, nullable=False, default=True)
 
     def __init__(self, file):
         self.original = file.filename
@@ -37,13 +47,54 @@ class Files(db.Model):
 
         file.save(self.save_path)
 
+        if Files.check_image(file):  # if file is image
+            self.is_image = True
+
+            small_image, medium_image = Files.resize_image(self.save_path)
+
+            small_image_name = SMALL_IMAGE_NAME_HEADER + self.random
+            medium_image_name = MEDIUM_IMAGE_NAME_HEADER + self.random
+
+            small_image.save(Files.make_save_path(small_image_name))
+            medium_image.save(Files.make_save_path(medium_image_name))
+
+        else:
+            self.is_image = False
+
     def delete(self):
-        try:
+        with suppress(FileNotFoundError):
             os.remove(self.save_path)
-        except FileNotFoundError:
-            pass
+            if self.is_image:
+                os.remove(Files.make_save_path(SMALL_IMAGE_NAME_HEADER + self.random))
+                os.remove(Files.make_save_path(MEDIUM_IMAGE_NAME_HEADER + self.random))
 
         self.active = False
+
+    @staticmethod
+    def resize_image(image_path):
+        im = Image.open(image_path)
+        small = im.resize((int(im.size[0] * SMALL_IMAGE_SIZE),
+                           int(im.size[1] * SMALL_IMAGE_SIZE)))
+
+        medium = im.resize((int(im.size[0] * MEDIUM_IMAGE_SIZE),
+                            int(im.size[1] * MEDIUM_IMAGE_SIZE)))
+
+        return small, medium
+
+    @staticmethod
+    def check_image(file):
+        try:
+            filetype = file.filename.split('.')[-1].lower()
+        except IndexError:
+            filetype = ""
+        finally:
+            mimetype = file.mimetype.split('/')[0].lower()
+
+        return mimetype == "image" or filetype in ['jpg', 'jpeg', 'png', 'gif', 'bmp']
+
+    @staticmethod
+    def make_save_path(filename):
+        return os.path.join(UPLOAD_PATH, filename)
 
     @property
     def save_path(self):
