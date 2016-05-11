@@ -8,6 +8,11 @@ from config import PROJECT_PATH
 APP_PATH = path.dirname(path.abspath(__file__))
 UPLOAD_PATH = path.join(APP_PATH, 'uploads')
 
+SMALL_IMAGE_SIZE = 0.3
+SMALL_IMAGE_NAME_HEADER = 'small_'
+MEDIUM_IMAGE_SIZE = 0.7
+MEDIUM_IMAGE_NAME_HEADER = 'medium_'
+
 # APIS URL
 APIS_NAME = 'apis'
 APIS_URL_PREFIX = '/apis'
@@ -40,7 +45,7 @@ TEST_USER_EMAIL = 'email@email.com'
 TEST_USER_NICKNAME = 'testnick'
 TEST_FILENAME = 'test.txt'
 TEST_FILEDATA = b'this is test file~!~!~!~!'
-TEST_IMAGENAME = 'test'
+TEST_IMAGENAME = 'test.png'
 TEST_IMAGE = os.path.join(PROJECT_PATH, 'tests', 'image.png')
 
 

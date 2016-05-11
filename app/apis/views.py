@@ -109,7 +109,7 @@ class File(RestBase):
 
         f = Files.query.filter_by(random=filename).first_or_404()
 
-        db.session.delete(f)
+        f.delete()
 
         db.session.commit()
 
