@@ -14,8 +14,10 @@ MEDIUM_IMAGE_SIZE = 0.7
 MEDIUM_IMAGE_NAME_HEADER = 'medium_'
 
 # APIS URL
-APIS_NAME = 'apis'
-APIS_URL_PREFIX = '/apis'
+USER_API_NAME = 'User'
+FILE_API_NAME = 'File'
+USER_API_URL_PREFIX = '/user'
+FILE_API_URL_PREFIX = '/file'
 APIS_ACCOUNT_URL = '/account'
 APIS_SESSION_URL = '/session'
 APIS_ACCOUNT_GETS_URL = '/accounts'

@@ -29,17 +29,17 @@ class BaseTestCase(TestCase):
 
 class UserTestCase(BaseTestCase):
     def login(self, userid, userpw):
-        url = APIS_URL_PREFIX + APIS_SESSION_URL
+        url = USER_API_URL_PREFIX + APIS_SESSION_URL
         return self.client.post(url,
                                 data=dict(userid=userid,
                                           userpw=userpw))
 
     def logout(self):
-        url = APIS_URL_PREFIX + APIS_SESSION_URL
+        url = USER_API_URL_PREFIX + APIS_SESSION_URL
         return self.client.delete(url)
 
     def register(self, userid, userpw, name, email, nickname):
-        url = APIS_URL_PREFIX + APIS_ACCOUNT_URL
+        url = USER_API_URL_PREFIX + APIS_ACCOUNT_URL
 
         return self.client.post(url,
                                 data=dict(userid=userid,
@@ -49,37 +49,37 @@ class UserTestCase(BaseTestCase):
                                           nickname=nickname))
 
     def current_user(self):
-        url = APIS_URL_PREFIX + APIS_SESSION_URL
+        url = USER_API_URL_PREFIX + APIS_SESSION_URL
         return self.client.get(url)
 
     def user_info(self, useridnum):
-        url = APIS_URL_PREFIX + APIS_ACCOUNT_URL
+        url = USER_API_URL_PREFIX + APIS_ACCOUNT_URL
         return self.client.get(url,
                                data=dict(userid=useridnum))
 
     def delete(self, userpw):
-        url = APIS_URL_PREFIX + APIS_ACCOUNT_URL
+        url = USER_API_URL_PREFIX + APIS_ACCOUNT_URL
         return self.client.delete(url,
                                   data=dict(userpw=userpw))
 
     def upload_file(self):
-        url = APIS_URL_PREFIX + APIS_FILES_URL
+        url = FILE_API_URL_PREFIX + APIS_FILES_URL
         return self.client.post(url,
                                 data=dict(file=(BytesIO(TEST_FILEDATA), TEST_FILENAME)),
                                 content_type='multipart/form-data')
 
     def delete_file(self, filename):
-        url = APIS_URL_PREFIX + APIS_FILES_URL
+        url = FILE_API_URL_PREFIX + APIS_FILES_URL
         return self.client.delete(url,
                                   data=dict(filename=filename))
 
     def delete_image(self, filename):
-        url = APIS_URL_PREFIX + APIS_FILES_URL
+        url = FILE_API_URL_PREFIX + APIS_FILES_URL
         return self.client.delete(url,
                                   data=dict(filename=filename))
 
     def upload_image(self):
-        url = APIS_URL_PREFIX + APIS_FILES_URL
+        url = FILE_API_URL_PREFIX + APIS_FILES_URL
 
         with open(TEST_IMAGE, 'rb') as fp:
             test_imagedata = fp.read()
@@ -163,20 +163,20 @@ class ModelingTestCase(BaseTestCase):
     def g_o_c_shop(u):
         return get_or_create(db.session, Shop,
                              title=TEST_SHOPNAME,
-                             writer=u)
+                             user=u)
 
     @staticmethod
     def g_o_c_comment(u, s):
         return get_or_create(db.session, Comment,
                              content=TEST_COMMENT,
-                             writer=u,
+                             user=u,
                              shop=s)
 
     @staticmethod
     def g_o_c_score(u, s, score):
         return get_or_create(db.session, ShopScore,
                              score=score,
-                             writer=u,
+                             user=u,
                              shop=s)
 
     @staticmethod
@@ -212,7 +212,7 @@ class ModelingTestCase(BaseTestCase):
         assert c in u.comment
 
         # Shop Check
-        assert s.writer is u
+        assert s.user is u
         assert c in s.comment
         assert sc1 in s.all_score
         assert sc2 in s.all_score
@@ -220,7 +220,7 @@ class ModelingTestCase(BaseTestCase):
         assert t in s.tag
 
         # Comment Check
-        assert c.writer is u
+        assert c.user is u
         assert c.shop is s
 
         # Tag Check

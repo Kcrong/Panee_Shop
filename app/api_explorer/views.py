@@ -7,11 +7,13 @@ from . import explorer_blueprint
 from app.static_string import EXPLORER_STATIC_PATH, EXPLORER_INDEX_URL, EXPLORER_URL_PREFIX
 
 # Import All blueprint
-from app.apis import main_api, apis_blueprint, apis_parser
+from app.apis.File import file_blueprint, file_api, file_api_parser
+from app.apis.User import user_api_parser, user_blueprint, user_api
 
 API_DICT = {
     # (api, parser, blueprint)
-    apis_blueprint.name: (main_api, apis_parser, apis_blueprint)
+    file_blueprint.name: (file_api, file_api_parser, file_blueprint),
+    user_blueprint.name: (user_api, user_api_parser, user_blueprint)
 }
 
 

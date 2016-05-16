@@ -1,21 +1,16 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-
-from flask import request, jsonify
+from app.static_string import *
+from flask import request
+from app import RestBase
+from . import user_api
+from ..login_manager import *
+from app.models import *
 from sqlalchemy.exc import IntegrityError
 
-from app import RestBase
-from app.models import *
-from app.static_string import APIS_ACCOUNT_URL, APIS_SESSION_URL, APIS_FILES_URL
-from app.static_string import json_message
-from . import main_api
-from .login_manager import login_required, current_user, logout_required, login_user, logout_user
 
-
-@main_api.resource(APIS_ACCOUNT_URL)
+@user_api.resource(APIS_ACCOUNT_URL)
 class Main(RestBase):
     def __init__(self):
-        self.parser = apis_parser[APIS_ACCOUNT_URL][request.method]
+        self.parser = user_api_parser[APIS_ACCOUNT_URL][request.method]
 
     def get(self):
         args = self.args
@@ -66,10 +61,10 @@ class Main(RestBase):
         return json_message()
 
 
-@main_api.resource(APIS_SESSION_URL)
+@user_api.resource(APIS_SESSION_URL)
 class Session(RestBase):
     def __init__(self):
-        self.parser = apis_parser[APIS_SESSION_URL][request.method]
+        self.parser = user_api_parser[APIS_SESSION_URL][request.method]
 
     @login_required
     def get(self):
@@ -89,31 +84,4 @@ class Session(RestBase):
         return json_message()
 
 
-@main_api.resource(APIS_FILES_URL)
-class File(RestBase):
-    def __init__(self):
-        self.parser = apis_parser[APIS_FILES_URL][request.method]
-
-    def post(self):
-        file = self.args['file']
-
-        f = Files(file)
-
-        db.session.add(f)
-        db.session.commit()
-
-        return json_message(file=f.random)
-
-    def delete(self):
-        filename = self.args['filename']
-
-        f = Files.query.filter_by(random=filename).first_or_404()
-
-        f.delete()
-
-        db.session.commit()
-
-        return json_message()
-
-
-from .arg_manager import apis_parser
+from .arg_manager import user_api_parser
