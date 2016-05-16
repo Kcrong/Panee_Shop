@@ -111,7 +111,7 @@ class Users(db.Model):
     is_active = db.Column(db.Boolean, default=True, nullable=False)
     created_at = db.Column(db.DATETIME, default=datetime.now(), nullable=False)
     updated_at = db.Column(db.DATETIME, default=datetime.now(), nullable=False, onupdate=datetime.now())
-    shop = db.relationship('Shop', backref='user')
+    shop = db.relationship('Shops', backref='user')
 
     def __init__(self, userid, userpw, name, email, nickname):
         self.userid = userid
@@ -137,7 +137,7 @@ class Comments(db.Model):
     id = db.Column(db.INTEGER, primary_key=True)
     user = db.relationship(Users, uselist=False, backref='comment')
     user_id = db.Column(db.INTEGER, db.ForeignKey(Users.id))
-    shop_id = db.Column(db.INTEGER, db.ForeignKey('shop.id'))
+    shop_id = db.Column(db.INTEGER, db.ForeignKey('shops.id'))
     content = db.Column(db.String(300), nullable=False)
 
     def __init__(self, content, user, shop):
@@ -150,10 +150,10 @@ class Comments(db.Model):
 class ShopScores(db.Model):
     id = db.Column(db.INTEGER, primary_key=True)
     user = db.relationship(Users, backref='score', uselist=False)
-    user_id = db.Column(db.INTEGER, db.ForeignKey('user.id'))
+    user_id = db.Column(db.INTEGER, db.ForeignKey(Users.id))
     score = db.Column(db.INTEGER, nullable=False)
-    shop = db.relationship('Shop', backref='all_score', uselist=False)
-    shop_id = db.Column(db.INTEGER, db.ForeignKey('shop.id'))
+    shop = db.relationship('Shops', backref='all_score', uselist=False)
+    shop_id = db.Column(db.INTEGER, db.ForeignKey('shops.id'))
 
     def __init__(self, score, user, shop):
         self.score = score
@@ -167,9 +167,9 @@ class ShopScores(db.Model):
 class Shops(db.Model):
     id = db.Column(db.INTEGER, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
-    user_id = db.Column(db.INTEGER, db.ForeignKey('user.id'))
+    user_id = db.Column(db.INTEGER, db.ForeignKey(Users.id))
     comment = db.relationship(Comments, backref='shop')
-    tag = db.relationship('Tag', backref='shop')
+    tag = db.relationship('Tags', backref='shop')
 
     def __init__(self, title, user):
         self.title = title
@@ -184,7 +184,7 @@ class Shops(db.Model):
 class Tags(db.Model):
     id = db.Column(db.INTEGER, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
-    shop_id = db.Column(db.INTEGER, db.ForeignKey('shop.id'))
+    shop_id = db.Column(db.INTEGER, db.ForeignKey('shops.id'))
 
     def __init__(self, name, shop):
         self.name = name
