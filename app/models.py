@@ -101,7 +101,7 @@ class Files(db.Model):
         return os.path.join(UPLOAD_PATH, self.random)
 
 
-class User(db.Model):
+class Users(db.Model):
     id = db.Column(db.INTEGER, primary_key=True)
     userid = db.Column(db.String(50), unique=True, nullable=False)
     userpw = db.Column(db.String(50), nullable=False)
@@ -133,7 +133,7 @@ class User(db.Model):
                     updated_at=self.updated_at)
 
 
-class Comment(db.Model):
+class Comments(db.Model):
     id = db.Column(db.INTEGER, primary_key=True)
     user = db.relationship(User, uselist=False, backref='comment')
     user_id = db.Column(db.INTEGER, db.ForeignKey(User.id))
@@ -147,7 +147,7 @@ class Comment(db.Model):
 
 
 # 상품 평점
-class ShopScore(db.Model):
+class ShopScores(db.Model):
     id = db.Column(db.INTEGER, primary_key=True)
     user = db.relationship(User, backref='score', uselist=False)
     user_id = db.Column(db.INTEGER, db.ForeignKey('user.id'))
@@ -181,7 +181,7 @@ class Shop(db.Model):
         return sum(score_obj.score for score_obj in all_score_obj) / len(all_score_obj)
 
 
-class Tag(db.Model):
+class Tags(db.Model):
     id = db.Column(db.INTEGER, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     shop_id = db.Column(db.INTEGER, db.ForeignKey('shop.id'))
