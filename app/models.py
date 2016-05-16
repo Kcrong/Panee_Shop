@@ -135,8 +135,8 @@ class Users(db.Model):
 
 class Comments(db.Model):
     id = db.Column(db.INTEGER, primary_key=True)
-    user = db.relationship(User, uselist=False, backref='comment')
-    user_id = db.Column(db.INTEGER, db.ForeignKey(User.id))
+    user = db.relationship(Users, uselist=False, backref='comment')
+    user_id = db.Column(db.INTEGER, db.ForeignKey(Users.id))
     shop_id = db.Column(db.INTEGER, db.ForeignKey('shop.id'))
     content = db.Column(db.String(300), nullable=False)
 
@@ -149,7 +149,7 @@ class Comments(db.Model):
 # 상품 평점
 class ShopScores(db.Model):
     id = db.Column(db.INTEGER, primary_key=True)
-    user = db.relationship(User, backref='score', uselist=False)
+    user = db.relationship(Users, backref='score', uselist=False)
     user_id = db.Column(db.INTEGER, db.ForeignKey('user.id'))
     score = db.Column(db.INTEGER, nullable=False)
     shop = db.relationship('Shop', backref='all_score', uselist=False)
@@ -164,11 +164,11 @@ class ShopScores(db.Model):
         return self.score + other.score
 
 
-class Shop(db.Model):
+class Shops(db.Model):
     id = db.Column(db.INTEGER, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
     user_id = db.Column(db.INTEGER, db.ForeignKey('user.id'))
-    comment = db.relationship(Comment, backref='shop')
+    comment = db.relationship(Comments, backref='shop')
     tag = db.relationship('Tag', backref='shop')
 
     def __init__(self, title, user):

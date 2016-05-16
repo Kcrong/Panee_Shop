@@ -14,7 +14,7 @@ class Main(RestBase):
 
     def get(self):
         args = self.args
-        u = User.query.filter_by(id=args['userid'], is_active=True).first_or_404()
+        u = Users.query.filter_by(id=args['userid'], is_active=True).first_or_404()
         return jsonify(u.base_info_dict)
 
     @login_required
@@ -31,7 +31,7 @@ class Main(RestBase):
     @logout_required
     def post(self):
         args = self.args
-        u = User(args['userid'], args['userpw'], args['name'], args['email'], args['nickname'])
+        u = Users(args['userid'], args['userpw'], args['name'], args['email'], args['nickname'])
 
         db.session.add(u)
 
@@ -50,7 +50,7 @@ class Main(RestBase):
     @login_required
     def put(self):
         args = self.args
-        u = User.query.filter_by(userid=args['userid'], active=True).first_or_404()
+        u = Users.query.filter_by(userid=args['userid'], active=True).first_or_404()
         u.userpw = args['userpw']
         u.name = args['name']
         u.email = args['email']
@@ -74,7 +74,7 @@ class Session(RestBase):
     @logout_required
     def post(self):
         args = self.args
-        u = User.query.filter_by(userid=args['userid'], userpw=args['userpw'], is_active=True).first_or_404()
+        u = Users.query.filter_by(userid=args['userid'], userpw=args['userpw'], is_active=True).first_or_404()
         login_user(u.userid)
         return json_message()
 

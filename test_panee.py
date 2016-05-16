@@ -152,7 +152,7 @@ class ModelingTestCase(BaseTestCase):
 
     @staticmethod
     def g_o_c_user():
-        return get_or_create(db.session, User,
+        return get_or_create(db.session, Users,
                              userid=TEST_USERID,
                              userpw=TEST_USERPW,
                              name=TEST_USERNAME,
@@ -161,27 +161,27 @@ class ModelingTestCase(BaseTestCase):
 
     @staticmethod
     def g_o_c_shop(u):
-        return get_or_create(db.session, Shop,
+        return get_or_create(db.session, Shops,
                              title=TEST_SHOPNAME,
                              user=u)
 
     @staticmethod
     def g_o_c_comment(u, s):
-        return get_or_create(db.session, Comment,
+        return get_or_create(db.session, Comments,
                              content=TEST_COMMENT,
                              user=u,
                              shop=s)
 
     @staticmethod
     def g_o_c_score(u, s, score):
-        return get_or_create(db.session, ShopScore,
+        return get_or_create(db.session, ShopScores,
                              score=score,
                              user=u,
                              shop=s)
 
     @staticmethod
     def g_o_c_tag(s, name):
-        return get_or_create(db.session, Tag,
+        return get_or_create(db.session, Tags,
                              name=name,
                              shop=s)
 
@@ -203,9 +203,9 @@ class ModelingTestCase(BaseTestCase):
         assert t in db.session
 
         # Check Inside data
-        u = User.query.first()
-        s = Shop.query.first()
-        c = Comment.query.first()
+        u = Users.query.first()
+        s = Shops.query.first()
+        c = Comments.query.first()
 
         # User Check
         assert s in u.shop
