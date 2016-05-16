@@ -19,7 +19,7 @@ class Main(RestBase):
 
     def get(self):
         args = self.args
-        u = User.query.filter_by(id=args['userid'], active=True).first_or_404()
+        u = User.query.filter_by(id=args['userid'], is_active=True).first_or_404()
         return jsonify(u.base_info_dict)
 
     @login_required
@@ -79,7 +79,7 @@ class Session(RestBase):
     @logout_required
     def post(self):
         args = self.args
-        u = User.query.filter_by(userid=args['userid'], userpw=args['userpw'], active=True).first_or_404()
+        u = User.query.filter_by(userid=args['userid'], userpw=args['userpw'], is_active=True).first_or_404()
         login_user(u.userid)
         return json_message()
 
