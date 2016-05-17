@@ -34,7 +34,7 @@ class Files(db.Model):
     random = db.Column(db.String(200), nullable=False, unique=True)
     type = db.Column(db.String(10))
     is_image = db.Column(db.Boolean, nullable=False)
-    active = db.Column(db.Boolean, nullable=False, default=True)
+    is_active = db.Column(db.Boolean, nullable=False, default=True)
 
     def __init__(self, file):
         self.original = file.filename
@@ -101,17 +101,17 @@ class Files(db.Model):
         return os.path.join(UPLOAD_PATH, self.random)
 
 
-class User(db.Model):
+class Users(db.Model):
     id = db.Column(db.INTEGER, primary_key=True)
     userid = db.Column(db.String(50), unique=True, nullable=False)
     userpw = db.Column(db.String(50), nullable=False)
     name = db.Column(db.String(20), nullable=False)
     email = db.Column(db.String(50), nullable=False, unique=True)
     nickname = db.Column(db.String(50), nullable=False, unique=True)
-    active = db.Column(db.Boolean, default=True, nullable=False)
-    created = db.Column(db.DATETIME, default=datetime.now(), nullable=False)
-    updated = db.Column(db.DATETIME, default=datetime.now(), nullable=False, onupdate=datetime.now())
-    shop = db.relationship('Shop', backref='writer')
+    is_active = db.Column(db.Boolean, default=True, nullable=False)
+    created_at = db.Column(db.DATETIME, default=datetime.now(), nullable=False)
+    updated_at = db.Column(db.DATETIME, default=datetime.now(), nullable=False, onupdate=datetime.now())
+    shop = db.relationship('Shops', backref='user')
 
     def __init__(self, userid, userpw, name, email, nickname):
         self.userid = userid
@@ -129,51 +129,51 @@ class User(db.Model):
                     name=self.name,
                     email=self.email,
                     nickname=self.nickname,
-                    created=self.created,
-                    updated=self.updated)
+                    created_at=self.created_at,
+                    updated_at=self.updated_at)
 
 
-class Comment(db.Model):
+class Comments(db.Model):
     id = db.Column(db.INTEGER, primary_key=True)
-    writer = db.relationship(User, uselist=False, backref='comment')
-    writer_id = db.Column(db.INTEGER, db.ForeignKey(User.id))
-    shop_id = db.Column(db.INTEGER, db.ForeignKey('shop.id'))
+    user = db.relationship(Users, uselist=False, backref='comment')
+    user_id = db.Column(db.INTEGER, db.ForeignKey(Users.id))
+    shop_id = db.Column(db.INTEGER, db.ForeignKey('shops.id'))
     content = db.Column(db.String(300), nullable=False)
 
-    def __init__(self, content, writer, shop):
+    def __init__(self, content, user, shop):
         self.content = content
-        self.writer = writer
+        self.user = user
         self.shop = shop
 
 
 # 상품 평점
-class ShopScore(db.Model):
+class ShopScores(db.Model):
     id = db.Column(db.INTEGER, primary_key=True)
-    writer = db.relationship(User, backref='score', uselist=False)
-    writer_id = db.Column(db.INTEGER, db.ForeignKey('user.id'))
+    user = db.relationship(Users, backref='score', uselist=False)
+    user_id = db.Column(db.INTEGER, db.ForeignKey(Users.id))
     score = db.Column(db.INTEGER, nullable=False)
-    shop = db.relationship('Shop', backref='all_score', uselist=False)
-    shop_id = db.Column(db.INTEGER, db.ForeignKey('shop.id'))
+    shop = db.relationship('Shops', backref='all_score', uselist=False)
+    shop_id = db.Column(db.INTEGER, db.ForeignKey('shops.id'))
 
-    def __init__(self, score, writer, shop):
+    def __init__(self, score, user, shop):
         self.score = score
-        self.writer = writer
+        self.user = user
         self.shop = shop
 
     def __add__(self, other):
         return self.score + other.score
 
 
-class Shop(db.Model):
+class Shops(db.Model):
     id = db.Column(db.INTEGER, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
-    writer_id = db.Column(db.INTEGER, db.ForeignKey('user.id'))
-    comment = db.relationship(Comment, backref='shop')
-    tag = db.relationship('Tag', backref='shop')
+    user_id = db.Column(db.INTEGER, db.ForeignKey(Users.id))
+    comment = db.relationship(Comments, backref='shop')
+    tag = db.relationship('Tags', backref='shop')
 
-    def __init__(self, title, writer):
+    def __init__(self, title, user):
         self.title = title
-        self.writer = writer
+        self.user = user
 
     @property
     def score(self):
@@ -181,10 +181,10 @@ class Shop(db.Model):
         return sum(score_obj.score for score_obj in all_score_obj) / len(all_score_obj)
 
 
-class Tag(db.Model):
+class Tags(db.Model):
     id = db.Column(db.INTEGER, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
-    shop_id = db.Column(db.INTEGER, db.ForeignKey('shop.id'))
+    shop_id = db.Column(db.INTEGER, db.ForeignKey('shops.id'))
 
     def __init__(self, name, shop):
         self.name = name

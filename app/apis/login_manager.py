@@ -1,6 +1,6 @@
 from flask import session
 
-from app.models import User
+from app.models import Users
 from app.static_string import json_message
 
 
@@ -45,5 +45,5 @@ def logout_user():
 
 
 def current_user():
-    u = User.query.filter_by(userid=session['userid']).first()
+    u = Users.query.filter_by(userid=session['userid']).first()
     return u

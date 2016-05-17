@@ -50,16 +50,15 @@
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
                     {% for api, parser, blueprint in api_list.values() %}
-                    <li>
-                        <a href="javascript:;" data-toggle="collapse" data-target="#{{ blueprint.name }}"><i class="fa fa-fw fa-arrows-v"></i> {{ blueprint.name }} <i class="fa fa-fw fa-caret-down"></i></a>
-                        <ul id="{{ blueprint.name }}" class="collapse">
                             {% for api_class, url, _ in api.resources %}
-                            <li>
+                            {% if request.base_url.split('/')[-2] == url[0][1:] %}
+                                <li class="active">
+                            {% else %}
+                                <li>
+                            {% endif %}
                                 <a href="{{ url_for('.index', blueprint=blueprint.name, api=url[0][1:], method=api_class.methods[0]) }}">{{ url[0] }}</a>
                             </li>
                             {% endfor %}
-                        </ul>
-                    </li>
                     {% endfor %}
                 </ul>
             </div>
