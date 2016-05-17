@@ -1,16 +1,16 @@
 from app.static_string import *
 from flask import request
 from app import RestBase
-from . import user_api
+from . import api
 from ..login_manager import *
 from app.models import *
 from sqlalchemy.exc import IntegrityError
 
 
-@user_api.resource(APIS_ACCOUNT_URL)
+@api.resource(APIS_ACCOUNT_URL)
 class Main(RestBase):
     def __init__(self):
-        self.parser = user_api_parser[APIS_ACCOUNT_URL][request.method]
+        self.parser = api_parser[APIS_ACCOUNT_URL][request.method]
 
     def get(self):
         args = self.args
@@ -61,10 +61,10 @@ class Main(RestBase):
         return json_message()
 
 
-@user_api.resource(APIS_SESSION_URL)
+@api.resource(APIS_SESSION_URL)
 class Session(RestBase):
     def __init__(self):
-        self.parser = user_api_parser[APIS_SESSION_URL][request.method]
+        self.parser = api_parser[APIS_SESSION_URL][request.method]
 
     @login_required
     def get(self):
@@ -84,4 +84,4 @@ class Session(RestBase):
         return json_message()
 
 
-from .arg_manager import user_api_parser
+from .arg_manager import api_parser

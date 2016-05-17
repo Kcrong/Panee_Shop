@@ -1,14 +1,14 @@
 from flask import request
 from app.static_string import *
 from app import RestBase
-from . import file_api
+from . import api
 from app.models import *
 
 
-@file_api.resource(APIS_FILES_URL)
+@api.resource(APIS_FILES_URL)
 class File(RestBase):
     def __init__(self):
-        self.parser = file_api_parser[APIS_FILES_URL][request.method]
+        self.parser = api_parser[APIS_FILES_URL][request.method]
 
     def post(self):
         file = self.args['file']
@@ -32,4 +32,4 @@ class File(RestBase):
         return json_message()
 
 
-from .arg_manager import file_api_parser
+from .arg_manager import api_parser

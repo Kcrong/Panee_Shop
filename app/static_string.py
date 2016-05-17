@@ -31,8 +31,8 @@ SHOP_LIST_URL = '/list'
 # EXPLORER URL
 EXPLORER_NAME = 'explorer'
 EXPLORER_URL_PREFIX = '/explorer'
-EXPLORER_INDEX_URL = '/index'
-EXPLORER_STATIC_URL = '/'
+EXPLORER_INDEX_URL = '/'
+EXPLORER_STATIC_URL = '/static'
 
 # EXPLORER PATH
 EXPLORER_PATH = path.join(APP_PATH, 'api_explorer')

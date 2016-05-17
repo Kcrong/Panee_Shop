@@ -27,13 +27,15 @@ def setting_session():
 
 def create_app():
     from .main import main_blueprint
-    from .apis.File import file_blueprint
-    from .apis.User import user_blueprint
-    from .api_explorer import explorer_blueprint
-
     app.register_blueprint(main_blueprint)
-    app.register_blueprint(file_blueprint, url_prefix=FILE_API_URL_PREFIX)
-    app.register_blueprint(user_blueprint, url_prefix=USER_API_URL_PREFIX)
+
+    from .apis.File import blueprint
+    app.register_blueprint(blueprint, url_prefix=FILE_API_URL_PREFIX)
+
+    from .apis.User import blueprint
+    app.register_blueprint(blueprint, url_prefix=USER_API_URL_PREFIX)
+
+    from .api_explorer import explorer_blueprint
     app.register_blueprint(explorer_blueprint, url_prefix=EXPLORER_URL_PREFIX)
 
     app.config.from_pyfile('../config.py')
