@@ -1,45 +1,45 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
-from flask import render_template, send_from_directory, redirect, url_for
+import os
 
+from flask import render_template, send_from_directory
+
+from app.static_string import EXPLORER_STATIC_PATH, EXPLORER_STATIC_URL
 from . import explorer_blueprint
 
-from app.static_string import EXPLORER_STATIC_PATH, EXPLORER_INDEX_URL, EXPLORER_URL_PREFIX
-
 # Import All blueprint
-from app.apis.File import file_blueprint, file_api, file_api_parser
-from app.apis.User import user_api_parser, user_blueprint, user_api
+import app.apis
 
-API_DICT = {
-    # (api, parser, blueprint)
-    file_blueprint.name: (file_api, file_api_parser, file_blueprint),
-    user_blueprint.name: (user_api, user_api_parser, user_blueprint)
-}
+all_module_dict = dict()
+apis_path = app.apis.__path__[0]
+module_list = [name for name in os.listdir(apis_path)
+               if "__" not in name and os.path.isdir(os.path.join(apis_path, name))]
 
+# [name for name in os.listdir(apis_path) if os.path.isdir(os.path.join(apis_path, name))] == ['Files', 'Users']
+for module in module_list:
+    all_module_dict[module] = getattr(app.apis, module)
 
-@explorer_blueprint.route('/')
-def redirect_index():
-    api_list = list(API_DICT.values())
-    return redirect(url_for('.index',
-                            blueprint=api_list[0][2].name,
-                            api=api_list[0][0].resources[0][1][0][1:],
-                            method='GET'))
+template_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
+template_name = os.listdir(template_path)[0]
 
 
-@explorer_blueprint.route('/<path:filename>')
+@explorer_blueprint.route(EXPLORER_STATIC_URL + '/<path:filename>')
 def static_files(filename):
     return send_from_directory(EXPLORER_STATIC_PATH, filename)
 
 
-@explorer_blueprint.route(EXPLORER_INDEX_URL + '/<string:blueprint>/<string:api>/<string:method>')
-def index(blueprint, api, method):
-    api_resource_index = [url[0] for api_class, url, _ in API_DICT[blueprint][0].resources].index('/' + api)
-    method_list = API_DICT[blueprint][0].resources[api_resource_index][0].methods
+@explorer_blueprint.route('/')
+@explorer_blueprint.route('/<string:blueprint>/<string:api>')
+def index(blueprint=None, api=None):
+    if blueprint is None or api is None:
+        blueprint, module = list(all_module_dict.items())[0]
+        api = module.api.resources[0][1][0]
 
-    return render_template('explorer.html',
-                           base_url=EXPLORER_URL_PREFIX + EXPLORER_INDEX_URL,
-                           api_list=API_DICT,
-                           req_blueprint=blueprint,
-                           req_api=api,
-                           req_method=method,
-                           method_list=method_list)
+    api_class = [api_class for api_class, url, _ in all_module_dict[blueprint].api.resources
+                 if api in url[0]][0]
+
+    return render_template(template_name,
+                           blueprint=blueprint,
+                           api=api,
+                           api_class=api_class,
+                           all_module=all_module_dict)
