@@ -43,22 +43,23 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="{{ url_for('.redirect_index') }}">API Explorer</a>
+                <a class="navbar-brand" href="{{ url_for('.index') }}">API Explorer</a>
             </div>
 
             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
-                    {% for api, parser, blueprint in api_list.values() %}
-                            {% for api_class, url, _ in api.resources %}
-                            {% if request.base_url.split('/')[-2] == url[0][1:] %}
-                                <li class="active">
-                            {% else %}
-                                <li>
-                            {% endif %}
-                                <a href="{{ url_for('.index', blueprint=blueprint.name, api=url[0][1:], method=api_class.methods[0]) }}">{{ url[0] }}</a>
-                            </li>
-                            {% endfor %}
+                    {% for module_name in all_module.keys() %}
+                        <li>
+                            <a href="javascript:;" data-toggle="collapse" data-target="#{{ module_name }}"> {{ module_name }} <i class="fa fa-fw fa-caret-down"></i></a>
+                            <ul id="{{ module_name }}" class="collapse">
+                                {% for api_class, url, _ in all_module[module_name].api.resources %}
+                                    <li>
+                                        <a href="{{ url_for('.index', blueprint=module_name, api=url[0][1:]) }}">{{ url[0] }}</a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </li>
                     {% endfor %}
                 </ul>
             </div>
@@ -73,9 +74,11 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            {{ req_blueprint }}/{{ req_api }}
-                            {% for method in method_list %}
-                            <button type="button" onclick="location.href='{{ base_url }}/{{ req_blueprint }}/{{ req_api }}/{{ method }}'" class="btn btn-default">{{ method }}</button>
+                            {{ blueprint }}/{{ api }}
+                            {% for method in methods %}
+                                <button type="button" onclick="show_form({{ method }});" class="btn btn-default">
+                                    {{ method }}
+                                </button>
                             {% endfor %}
                         </h1>
                     </div>
@@ -84,19 +87,18 @@
 
                 <div class="row">
                     <div class="col-lg-6">
-
-                        <form id="api_form" role="form" action="/{{ req_blueprint }}/{{ req_api }}" method="{{ req_method }}" enctype="multipart/form-data">
-                            {% for req_item in api_list[req_blueprint][1]['/'+req_api][req_method].args %}
-                            <div class="form-group">
-                                <label>{{ req_item.name }}</label>
-                                <input type="{{ req_item.type | totype }}" placeholder="{{ req_item.type | totype }}" name="{{ req_item.name }}" class="form-control">
-                            </div>
-                            {% endfor %}
-
-                            <button type="submit" class="btn btn-default">Submit Button</button>
-                            <button type="reset" onclick="document.getElementById('api_result').innerText=''" class="btn btn-default">Reset Button</button>
-
-                        </form>
+                        {% for method in all_arg.keys() %}
+                            <form class="api_form" id="{{ method }}" role="form" action="/{{ blueprint | lower }}/{{ api }}" enctype="multipart/form-data">
+                                <div class="form-group">
+                                    {% for arg in all_arg[method].args %}
+                                        <label>{{ arg.name }}</label>
+                                        <input type="{{ arg.type | totype }}" placeholder="{{ arg.type | totype }}" name="{{ arg.name }}" class="form-control">
+                                    {% endfor %}
+                                </div>
+                                <button type="submit" class="btn btn-default">Submit Button</button>
+                                <button type="reset" onclick="document.getElementById('api_result').innerText=''" class="btn btn-default">Reset Button</button>
+                            </form>
+                        {% endfor %}
 
                     </div>
                     <div class="col-lg-6">
@@ -121,27 +123,40 @@ Result Area
 
     <!-- jQuery -->
     <script src="{{ url_for('.static_files', filename="js/jquery.js") }}"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <!-- Bootstrap Core JavaScript -->
     <script src="{{ url_for('.static_files', filename="js/bootstrap.min.js") }}"></script>
 
     <script>
-    $(document).ready(function(){
-        $('#api_form').submit(function() {
-            $.ajax({
-                data: $(this).serialize(),
-                type: $(this).attr('method'),
-                url: $(this).attr('action'),
-                success: function(response) {
-                    document.getElementById('api_result').innerHTML = JSON.stringify(response, undefined, 2);
-                },
-                error: function(response) {
-                    document.getElementById('api_result').innerHTML = JSON.stringify(response['responseJSON'], undefined, 2);
-                }
+        $(document).ready(function(){
+            $('.api_form').submit(function() {
+                $.ajax({
+                    data: $(this).serialize(),
+                    type: $(this).attr('method'),
+                    url: $(this).attr('action'),
+                    success: function(response) {
+                        document.getElementById('api_result').innerHTML = JSON.stringify(response, undefined, 2);
+                    },
+                    error: function(response) {
+                        document.getElementById('api_result').innerHTML = JSON.stringify(response['responseJSON'], undefined, 2);
+                    }
+                });
+                return false;
             });
-            return false;
+
         });
-    });
+
+        function show_form(form){
+            remove_all_form();
+            form.style.display = 'block';
+        }
+
+        function remove_all_form(){
+            var all_form = document.getElementsByClassName('api_form');
+            for(var i=0; i<all_form.length; i++){
+                all_form[i].style.display = 'none';
+            }
+        }
+        remove_all_form();
     </script>
 
 </body>
