@@ -37,8 +37,10 @@ def index(blueprint=None, api=None):
 
     api_class = [api_class for api_class, url, _ in all_module_dict[blueprint].api.resources
                  if api in url[0]][0]
-
-    all_arg_dict = all_module_dict[blueprint].api_parser['/' + api]
+    try:
+        all_arg_dict = all_module_dict[blueprint].api_parser[api]
+    except KeyError:
+        all_arg_dict = all_module_dict[blueprint].api_parser['/' + api]
 
     return render_template(template_name,
                            blueprint=blueprint,
