@@ -16,6 +16,11 @@ from config import randomkey
 
 from PIL import Image
 
+tag = db.Table('tag_shop_id',
+               db.Column('tag_id', db.Integer, db.ForeignKey('tags.id')),
+               db.Column('shop_id', db.Integer, db.ForeignKey('shops.id'))
+               )
+
 
 def get_or_create(session, model, **kwargs):
     instance = session.query(model).filter_by(**kwargs).first()
@@ -169,7 +174,8 @@ class Shops(db.Model):
     title = db.Column(db.String(100), nullable=False)
     user_id = db.Column(db.INTEGER, db.ForeignKey(Users.id))
     comment = db.relationship(Comments, backref='shop')
-    tag = db.relationship('Tags', backref='shop')
+    tags = db.relationship('Tags', secondary=tag,
+                           backref=db.backref('shops', lazy='dynamic'))
 
     def __init__(self, title, user):
         self.title = title
@@ -184,7 +190,6 @@ class Shops(db.Model):
 class Tags(db.Model):
     id = db.Column(db.INTEGER, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
-    shop_id = db.Column(db.INTEGER, db.ForeignKey('shops.id'))
 
     def __init__(self, name, shop):
         self.name = name
